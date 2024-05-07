@@ -52,7 +52,7 @@
                 <p class="login-box-msg" style="font-size:17px;">
                     <b>APPLICATION</b>
                     <br>
-                    <b> WAREHOUSE MAINTENANCE SYSTEM dsfwredscx</b>
+                    <b> WAREHOUSE MAINTENANCE SYSTEM</b>
                 </p>
 
                 <?= form_open('auth/verify_login', array('id' => 'form-login')); ?>
