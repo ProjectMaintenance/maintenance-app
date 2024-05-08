@@ -1,0 +1,17 @@
++submit diganti save
+tombol reset dihapus
+tambah back dengan logo tombol
+di area line machine di hapus excel dll
+update jadi edit
+warning diganti
+print dikategory hapus dan select all hapus
+ganti code jadi string bukan varchar jika datanya huruf semua
+material ganti jadi master data
+warning
+dikecilin tablenya
+tambahin nomer asset mesin
+
+tanyain tentang asm dan test itu 
+assembly dan test harus terpisah
+detail material error juga
+dibikin simpel barcode

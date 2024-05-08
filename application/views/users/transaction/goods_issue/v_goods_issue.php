@@ -13,14 +13,6 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('admin/dashboard') ?>">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active"><?= $bread_crumb; ?></li>
-
-                    </ol>
-                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -32,7 +24,7 @@
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">
-                    <a href="<?= site_url('admin/add_goods_issue') ?>" class="btn btn-primary"><i class="fas fa-plus mr-2"></i>Add Data</a>
+                    <a href="<?= site_url('users/add_goods_issue') ?>" class="btn btn-primary"><i class="fas fa-plus mr-2"></i>Add Data</a>
                 </h2>
 
                 <div class="card-tools">
@@ -125,7 +117,7 @@
                     },
                     {
                         extend: 'selectAll',
-                        text: '<i class="fas fa-tasks mr-2"></i> Select All',
+                        text: '<i class="fas fa-tasks mr-2"></i> Select All Print',
                         className: 'btn'
                     },
                     {

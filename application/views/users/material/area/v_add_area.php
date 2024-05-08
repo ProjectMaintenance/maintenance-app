@@ -13,16 +13,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><b><?= $title_page; ?></b></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('users/dashboard') ?>">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item"><a href="<?= site_url('users/area') ?>">Area</a>
-                        </li>
-                        <li class="breadcrumb-item active"><?= $bread_crumb; ?></li>
-
-                    </ol>
-                </div>
+                
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -53,8 +44,8 @@ input[type="text"] {
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-danger" id="reset_btn">Reset</button>
+            <a type="button" class="btn btn-danger" href="<?=base_url('users/area')?>"" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                <button type="submit" class="btn btn-primary">Save</button>
             </div>
             <?= form_close() ?>
         </div>

@@ -9,14 +9,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('users/dashboard') ?>">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active"><?= $bread_crumb; ?></li>
-
-                    </ol>
-                </div>
+               
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -285,7 +278,7 @@
                     },
                     {
                         extend: 'selectAll',
-                        text: '<i class="fas fa-tasks mr-2"></i> Select All',
+                        text: '<i class="fas fa-tasks mr-2"></i> Select All Print',
                         className: 'btn'
                     },
                     {

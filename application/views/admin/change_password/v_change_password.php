@@ -7,14 +7,7 @@
                 <div class="col-sm-6">
                     <h1><b><?= $title_page; ?></b></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('administrator/dashboard') ?>">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active"><?= $bread_crumb; ?></li>
-
-                    </ol>
-                </div>
+                
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -50,8 +43,7 @@
             <!-- /.card-body -->
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-danger">Reset</button>
+                <button type="submit" class="btn btn-primary">Save</button>
             </div>
             <?= form_close(); ?>
         </div>

@@ -12,14 +12,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('admin/dashboard') ?>">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active"><?= $bread_crumb; ?></li>
-
-                    </ol>
-                </div>
+                
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -66,7 +59,7 @@ input[type="text"] {
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-info" data-toggle="modal"
                                     data-target="#update_uom_<?= $value->id_uom; ?>">
-                                    <i class="fas fa-edit mr-2"></i>Update
+                                    <i class="fas fa-edit mr-2"></i>Edit
                                 </button>
                                 <button type="button" class="btn btn-danger" id="delete_uom"
                                     data-id-uom="<?= $value->id_uom; ?>" data-code-uom="<?= $value->code_uom; ?>"><i
@@ -133,42 +126,11 @@ $(document).ready(function() {
             "responsive": true,
             "lengthChange": true,
             "autoWidth": false,
-            select: {
-                selected: true,
-                style: 'multi'
-            },
-            "buttons": [{
-                    extend: "excel",
-                    text: '<i class="fas fa-file-excel mr-2"></i> EXCEL',
-                    className: 'btn-success',
-                    title: '',
-                    exportOptions: {
-                        stripHtml: false,
-                        columns: [0, 1, 2], // Indeks kolom yang ingin dicetak
-                    },
-                },
-                {
-                    extend: "print",
-                    text: '<i class="fas fa-print mr-2"></i> PRINT',
-                    className: 'btn-info',
-                    title: '',
-                    autoPrint: false,
-                    exportOptions: {
-                        stripHtml: false,
-                        columns: [0, 1, 2], // Indeks kolom yang ingin dicetak
-                    },
-                },
-                {
-                    extend: 'selectAll',
-                    text: '<i class="fas fa-tasks mr-2"></i> Select All',
-                    className: 'btn'
-                },
-                {
-                    extend: 'selectNone',
-                    text: '<i class="fas fa-times mr-2"></i> Cancel',
-                    className: 'btn-danger'
-                }
-            ]
+            // select: {
+            //     selected: true,
+            //     style: 'multi'
+            // },
+           
         }).buttons().container().appendTo('#tbl_uom_wrapper .col-md-6:eq(0)');
     });
 
@@ -247,7 +209,7 @@ $(document).ready(function() {
 
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            text: "You want delete this data!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

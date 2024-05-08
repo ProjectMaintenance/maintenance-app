@@ -13,14 +13,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('admin/dashboard') ?>">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active"><?= $bread_crumb; ?></li>
-
-                    </ol>
-                </div>
+               
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -73,7 +66,7 @@
                                 <td class="text-center">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#update_gr<?= $value->id_transaction; ?>">
-                                        <i class="fas fa-edit mr-2"></i>Update
+                                        <i class="fas fa-edit mr-2"></i>Edit
                                     </button>
                                     <button type="button" class="btn btn-danger" id="delete_transaction" data-id-transaction="<?= $value->id_transaction; ?>"><i class="fas fa-trash mr-2"></i>Delete</button>
                                 </td>
@@ -187,7 +180,7 @@
                     },
                     {
                         extend: 'selectAll',
-                        text: '<i class="fas fa-tasks mr-2"></i> Select All',
+                        text: '<i class="fas fa-tasks mr-2"></i> Select All Print',
                         className: 'btn'
                     },
                     {
@@ -331,7 +324,7 @@
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                text: "You want delete this data!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

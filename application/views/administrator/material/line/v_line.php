@@ -13,14 +13,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('administrator/dashboard') ?>">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active"><?= $bread_crumb; ?></li>
-
-                    </ol>
-                </div>
+               
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -67,7 +60,7 @@
                                 <td class="text-center">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#update_line_<?= $value->id_line; ?>">
-                                        <i class="fas fa-edit mr-2"></i>Update
+                                        <i class="fas fa-edit mr-2"></i>Edit
                                     </button>
                                     <button type="button" class="btn btn-danger" id="delete_line" data-id-line="<?= $value->id_line; ?>" data-code-line="<?= $value->code_line; ?>"><i class="fas fa-trash mr-2"></i>Delete</button>
                                 </td>
@@ -141,46 +134,16 @@
 
         $("#tbl_line").DataTable({
             "scrollX": true,
-            "responsive": false,
-            "lengthChange": true,
-            "autoWidth": false,
-            select: {
-                selected: true,
-                style: 'multi'
-            },
-            "buttons": [{
-                    extend: "excel",
-                    text: '<i class="fas fa-file-excel mr-2"></i> EXCEL',
-                    className: 'btn-success',
-                    title: '',
-                    exportOptions: {
-                        stripHtml: false,
-                        columns: [0, 1, 2, 3], // Indeks kolom yang ingin dicetak
-                    },
-                },
-                {
-                    extend: "print",
-                    text: '<i class="fas fa-print mr-2"></i> PRINT',
-                    className: 'btn-info',
-                    title: '',
-                    autoPrint: false,
-                    exportOptions: {
-                        stripHtml: false,
-                        columns: [0, 1, 2, 3], // Indeks kolom yang ingin dicetak
-                    },
-                },
-                {
-                    extend: 'selectAll',
-                    text: '<i class="fas fa-tasks mr-2"></i> Select All',
-                    className: 'btn'
-                },
-                {
-                    extend: 'selectNone',
-                    text: '<i class="fas fa-times mr-2"></i> Cancel',
-                    className: 'btn-danger'
-                }
-            ]
-        }).buttons().container().appendTo('#tbl_line_wrapper .col-md-6:eq(0)');
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        // select: {
+        //     selected: false,
+        //     style: 'multi'
+        // },
+        
+    }).buttons().container().appendTo('#tbl_category_wrapper .col-md-6:eq(0)');
+            
 
         //-------------------------------------------------- Update --------------------------------------------------\\
 
@@ -316,7 +279,7 @@
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                text: "You want delete this data!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="<?= site_url('admin/dashboard') ?>" class="brand-link">
         <center>
-            <img src="<?= base_url('assets/image/') ?>logo/Isuzu.svg.png" alt="Logo-Isuzu.png" width="150">
+            <img src="<?= base_url('assets/image/') ?>logo/isuzu.png" alt="Logo-Isuzu.png" width="150">
         </center>
     </a>
 
@@ -57,7 +57,7 @@
                     <a href="#" class="nav-link <?= $active; ?>">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Material
+                            Material Data
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>

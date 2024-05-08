@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="<?= site_url('users/dashboard') ?>" class="brand-link">
         <center>
-            <img src="<?= base_url('assets/image/') ?>logo/Isuzu.svg.png" alt="Logo-Isuzu.png" width="150">
+            <img src="<?= base_url('assets/image/') ?>logo/isuzu.png" alt="Logo-Isuzu.png" width="150">
         </center>
     </a>
 

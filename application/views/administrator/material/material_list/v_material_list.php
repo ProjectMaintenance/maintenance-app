@@ -9,14 +9,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= site_url('administrator/dashboard') ?>">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active"><?= $bread_crumb; ?></li>
-
-                    </ol>
-                </div>
+                
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -121,7 +114,7 @@
                             <td><?= $value->name_location ?></td>
                             <td class="text-center">
                                 <a href="<?= site_url('administrator/update_material_list/' . $value->id_material); ?>"
-                                    class="btn btn-info"><i class="fas fa-edit mr-2"></i>Update</a>
+                                    class="btn btn-info"><i class="fas fa-edit mr-2"></i>Edit</a>
                                 <button type="button" class="btn btn-danger" id="delete_material"
                                     data-id-material="<?= $value->id_material; ?>"
                                     data-code-material="<?= $value->code_material; ?>"><i
@@ -307,7 +300,7 @@ $(document).ready(function() {
             },
             {
                 extend: 'selectAll',
-                text: '<i class="fas fa-tasks mr-2"></i> Select All',
+                text: '<i class="fas fa-tasks mr-2"></i> Select All Print',
                 className: 'btn'
             },
             {
@@ -388,7 +381,7 @@ $(document).ready(function() {
 
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this! " + code_material,
+            text: "You want delete this data! " + code_material,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
