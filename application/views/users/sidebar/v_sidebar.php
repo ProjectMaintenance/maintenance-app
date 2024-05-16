@@ -63,15 +63,6 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php
-                        $params = $this->uri->segment(3);
-                        $material_list = (uri_string() == 'users/material_list' || uri_string() == 'users/add_material_list' || uri_String() == 'users/update_material_list/' . $params) ? 'active' : ''; ?>
-                        <li class="nav-item">
-                            <a href="<?= site_url('users/material_list') ?>" class="nav-link <?= $material_list; ?>">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Material List</p>
-                            </a>
-                        </li>
                         <?php $category = (uri_string() == 'users/category' || uri_string() == 'users/add_category') ? 'active' : ''; ?>
                         <li class="nav-item">
                             <a href="<?= site_url('users/category') ?>" class="nav-link <?= $category; ?>">
@@ -112,6 +103,15 @@
                             <a href="<?= site_url('users/location') ?>" class="nav-link <?= $location; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Location</p>
+                            </a>
+                        </li>
+                        <?php
+                        $params = $this->uri->segment(3);
+                        $material_list = (uri_string() == 'users/material_list' || uri_string() == 'users/add_material_list' || uri_String() == 'users/update_material_list/' . $params) ? 'active' : ''; ?>
+                        <li class="nav-item">
+                            <a href="<?= site_url('users/material_list') ?>" class="nav-link <?= $material_list; ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Material List</p>
                             </a>
                         </li>
                         <?php $detail_material = (uri_string() == 'users/detail_material_list') ? 'active' : ''; ?>
