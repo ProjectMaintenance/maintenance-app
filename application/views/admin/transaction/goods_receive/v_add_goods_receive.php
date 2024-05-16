@@ -30,15 +30,6 @@
             <?= form_open('admin/save_good_receive', ['id' => 'form-add-goods-receive']) ?>
             <div class="card-body">
                 <div class="form-group">
-                    <label for="id_transaction">GR Code</label>
-                    <input type="text" class="form-control" value="<?= $id_transaction; ?>" id="id_transaction" name="id_transaction" placeholder="Goods Receive Code" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="date_time">Date And Time</label>
-                    <input type="date" class="form-control" id="date" name="date">
-                    <input type="hidden" id="datetime" name="datetime">
-                </div>
-                <div class="form-group">
                     <label for="code_material">Material Code</label>
                     <select class="form-control select2" id="code_material" name="code_material" style="width: 100%;">
                         <option selected="selected" value="">- Select Material -</option>
@@ -55,6 +46,15 @@
                 <div class="form-group">
                     <label for="description">Alasan Pengambilan</label>
                     <input type="text" class="form-control" id="description" name="description" placeholder="Enter Lasan Pengambilan">
+                </div>
+                <div class="form-group">
+                    <label for="date_time">Date And Time</label>
+                    <input type="date" class="form-control" id="date" name="date" value="<?= date('Y-m-d') ?>" readonly>
+                    <input type="hidden" id="datetime" name="datetime">
+                </div>
+                <div class="form-group">
+                    <label for="id_transaction">GR Code</label>
+                    <input type="text" class="form-control" value="<?= $id_transaction; ?>" id="id_transaction" name="id_transaction" placeholder="Goods Receive Code" readonly>
                 </div>
             </div>
             <!-- /.card-body -->
@@ -78,7 +78,6 @@
 
 <script>
     $(document).ready(function() {
-        $('#quantity').focus();
         $('#code_material').select2({
             theme: 'bootstrap4'
         });

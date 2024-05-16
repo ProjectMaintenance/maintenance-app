@@ -62,15 +62,6 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <?php
-                        $params = $this->uri->segment(3);
-                        $material_list = (uri_string() == 'administrator/material_list' || uri_string() == 'administrator/add_material_list' || uri_String() == 'administrator/update_material_list/' . $params) ? 'active' : ''; ?>
-                        <li class="nav-item">
-                            <a href="<?= site_url('administrator/material_list') ?>" class="nav-link <?= $material_list; ?>">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Material List</p>
-                            </a>
-                        </li>
                         <?php $category = (uri_string() == 'administrator/category' || uri_string() == 'administrator/add_category') ? 'active' : ''; ?>
                         <li class="nav-item">
                             <a href="<?= site_url('administrator/category') ?>" class="nav-link <?= $category; ?>">
@@ -111,6 +102,15 @@
                             <a href="<?= site_url('administrator/location') ?>" class="nav-link <?= $location; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Location</p>
+                            </a>
+                        </li>
+                        <?php
+                        $params = $this->uri->segment(3);
+                        $material_list = (uri_string() == 'administrator/material_list' || uri_string() == 'administrator/add_material_list' || uri_String() == 'administrator/update_material_list/' . $params) ? 'active' : ''; ?>
+                        <li class="nav-item">
+                            <a href="<?= site_url('administrator/material_list') ?>" class="nav-link <?= $material_list; ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Material List</p>
                             </a>
                         </li>
                         <?php $detail_material = (uri_string() == 'administrator/detail_material_list') ? 'active' : ''; ?>
