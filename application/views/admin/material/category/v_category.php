@@ -14,7 +14,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -29,9 +29,9 @@ input[type="text"] {
                     <a href="<?= site_url('admin/add_category') ?>" class="btn btn-primary"><i
                             class="fas fa-plus mr-2"></i>Add Data</a>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success" data-toggle="modal"
+                    <!-- <button type="button" class="btn btn-success" data-toggle="modal"
                         data-target="#upload_excel_category">
-                        <i class="fas fa-upload mr-2"></i>Upload Excel </button>
+                        <i class="fas fa-upload mr-2"></i>Upload Excel </button> -->
 
                     <!-- Modal -->
                     <div class="modal fade" id="upload_excel_category" data-backdrop="static" data-keyboard="false"
@@ -90,8 +90,8 @@ input[type="text"] {
                 <table id="tbl_category" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>CODE CATEGORY</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">CODE CATEGORY</th>
                             <th>NAME CATEGORY</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -101,8 +101,8 @@ input[type="text"] {
                         $no = 1;
                         foreach ($category as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $value->code_category ?></td>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td class="text-center"><?= $value->code_category ?></td>
                             <td><?= $value->name_category ?></td>
                             <td class="text-center">
                                 <!-- Button trigger modal -->
@@ -179,14 +179,17 @@ $(document).ready(function() {
 
         $("#tbl_category").DataTable({
             "scrollX": true,
-            "responsive": true,
+            "responsive": false,
             "lengthChange": true,
             "autoWidth": false,
-            // select: {
-            //     selected: false,
-            //     style: 'multi'
-            // },
-            
+            "bStateSave": true,
+            "scrollY": 400,
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            },
         }).buttons().container().appendTo('#tbl_category_wrapper .col-md-6:eq(0)');
     });
 

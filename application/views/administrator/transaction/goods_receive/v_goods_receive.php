@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -25,7 +25,7 @@
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">
-                    <a href="<?= site_url('administrator/add_goods_receive') ?>" class="btn btn-primary"><i class="fas fa-plus mr-2"></i>Add Data</a>
+                    <a href="<?= site_url('administrator/add_goods_receive') ?>" class="btn btn-primary"><i class="fas fa-plus mr-2"></i>Add Goods Receive</a>
                 </h2>
 
                 <div class="card-tools">
@@ -41,13 +41,15 @@
                 <table id="tbl_transaction" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>GR CODE</th>
                             <th>DATE</th>
-                            <th>MATERIAL CODE</th>
-                            <th>GR QUANTITY</th>
-                            <th>IDENTITY PIC</th>
+                            <th class="text-center">MATERIAL CODE</th>
                             <th>DESCRIPTION</th>
+                            <th class="text-center">GR QUANTITY</th>
+                            <th class="text-center">UOM</th>
+                            <th>IDENTITY PIC</th>
+                            <th class="text-right">PRICE PER UNIT</th>
+                            <th>NOTE</th>
+                            <th class="text-center">GR CODE</th>
                             <th class="text-center">ACTION</th>
                         </tr>
                     </thead>
@@ -56,13 +58,15 @@
                         $no = 1;
                         foreach ($goods_receive as $value) : ?>
                             <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= $value->id_transaction ?></td>
                                 <td><?= $value->date ?></td>
-                                <td><?= $value->code_material ?></td>
-                                <td><?= $value->quantity ?></td>
+                                <td class="text-center"><?= $value->code_material ?></td>
+                                <td><?= $value->specification_material ?></td>
+                                <td class="text-center"><?= $value->quantity ?></td>
+                                <td class="text-center"><?= $value->code_uom ?></td>
                                 <td><?= $value->identity_pic ?></td>
+                                <td class="text-right">Rp<?= number_format($value->price, 0, ',', '.') ?></td>
                                 <td><?= $value->description ?></td>
+                                <td class="text-center"><?= $value->id_transaction ?></td>
                                 <td class="text-center">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#update_gr<?= $value->id_transaction; ?>">
@@ -104,10 +108,10 @@
                     <div class="form-group">
                         <label for="date_transaction">DATE TRANSACTION</label>
                         <!-- Menampilkan input tanggal dengan tanggal dari data transaksi -->
-                        <input type="date" name="date_transaction" class="form-control" id="date_transaction<?= $value->id_transaction; ?>" value="<?= isset($value->date) ? date('Y-m-d', strtotime($value->date)) : ''; ?>">
+                        <input type="date" name="date_transaction" class="form-control" id="date_transaction<?= $value->id_transaction; ?>" value="<?= isset($value->date) ? date('Y-m-d', strtotime($value->date)) : ''; ?>" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="material">Material Code</label>
+                        <label for="material">MATERIAL CODE</label>
                         <select class="form-control select2" id="material<?= $value->id_transaction; ?>" name="material" style="width: 100%;">
                             <option selected="selected" value="">- Select Material -</option>
                         </select>
@@ -118,12 +122,36 @@
                         <label for="quantity">QUANTITY</label>
                         <input type="number" class="form-control" id="quantity<?= $value->id_transaction; ?>" name="quantity" placeholder="Enter ID Transaction" value="<?= $value->quantity; ?>">
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="identity_pic">IDENTITY PIC</label>
                         <input type="text" class="form-control" id="identity_pic<?= $value->id_transaction; ?>" name="identity_pic" placeholder="Enter ID Transaction" value="<?= $value->identity_pic; ?>">
+                    </div> -->
+                    <?php
+                    $identity = ['Dian', 'Mentari', 'Renaldi'];
+                    ?>
+                    <div class="form-group">
+                        <label for="identity_pic">IDENTITY PIC</label>
+                        <select class="form-control select2" name="identity_pic" id="identity_pic<?= $value->id_transaction; ?>">
+                            <option value="" selected>- Select Identity PIC -</option>
+                            <?php foreach ($identity as $idnty) : ?>
+                                <?php if ($idnty != $value->identity_pic) : ?>
+                                    <option value="<?= $idnty ?>"><?= $idnty ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <option value="<?= $value->identity_pic ?>" selected><?= $value->identity_pic ?></option>
+                            <option value="0">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="other_identity_pic_group<?= $value->id_transaction; ?>" style="display: none;">
+                        <label for="other_identity_pic">Enter Other Identity PIC</label>
+                        <input type="text" class="form-control" name="other_identity_pic" id="other_identity_pic<?= $value->id_transaction; ?>">
                     </div>
                     <div class="form-group">
-                        <label for="description">DESCRIPTION</label>
+                        <label for="price">PRICE PER UNIT (Rp)</label>
+                        <input type="text" class="form-control" id="price" <?= $value->id_transaction; ?> name="price" placeholder="Enter Price" value="<?= $value->price; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Note</label>
                         <input type="text" class="form-control" id="description<?= $value->id_transaction; ?>" name="description" placeholder="Enter ID Transaction" value="<?= $value->description; ?>">
                     </div>
                 </div>
@@ -141,6 +169,7 @@
 <!-- jquery-validation -->
 <script src="<?= base_url('assets/template/') ?>plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>plugins/jquery-validation/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/1.8.2/autoNumeric.js"></script>
 <script>
     $(document).ready(function() {
         $('.select2').select2({
@@ -149,9 +178,19 @@
 
         $("#tbl_transaction").DataTable({
             "scrollX": true,
-            "responsive": true,
+            "responsive": false,
             "lengthChange": true,
             "autoWidth": false,
+            "bStateSave": true,
+            paging: true,
+            scrollCollapse: true,
+            scrollY: '86vh',
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            },
             select: {
                 selected: true,
                 style: 'multi'
@@ -163,7 +202,7 @@
                     title: '',
                     exportOptions: {
                         stripHtml: false,
-                        columns: [0, 1, 2, 3, 4, 5, 6], // Indeks kolom yang ingin dicetak
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8], // Indeks kolom yang ingin dicetak
                     },
                 },
                 {
@@ -174,12 +213,12 @@
                     autoPrint: false,
                     exportOptions: {
                         stripHtml: false,
-                        columns: [0, 1, 2, 3, 4, 5, 6], // Indeks kolom yang ingin dicetak
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8], // Indeks kolom yang ingin dicetak
                     },
                 },
                 {
                     extend: 'selectAll',
-                    text: '<i class="fas fa-tasks mr-2"></i> Select All Print',
+                    text: '<i class="fas fa-tasks mr-2"></i> Select All',
                     className: 'btn'
                 },
                 {
@@ -191,6 +230,24 @@
         }).buttons().container().appendTo('#tbl_transaction_wrapper .col-md-6:eq(0)');
 
         <?php foreach ($goods_receive as $value) : ?>
+
+            $('#identity_pic<?= $value->id_transaction; ?>').change(function(e) {
+                e.preventDefault();
+                var value = $(this).val();
+
+                if (value == "0") { // Check if the "Other" option is selected
+                    $('#other_identity_pic_group<?= $value->id_transaction; ?>')
+                        .show(); // Show the text input field
+                    setTimeout(function() {
+                        $('#other_identity_pic<?= $value->id_transaction; ?>')
+                            .focus(); // Set focus to the text input field after a short delay
+                    }, 100); // Adjust the delay as needed
+                } else {
+                    $('#other_identity_pic_group<?= $value->id_transaction; ?>')
+                        .hide(); // Hide the text input field
+                }
+            });
+
 
             $.ajax({
                 url: "<?php echo base_url('administrator/material_list'); ?>",
@@ -278,7 +335,7 @@
                         required: true,
                     },
                     description: {
-                        required: true,
+                        required: false,
                     },
                 },
                 messages: {
@@ -366,6 +423,21 @@
                 }
             });
         });
+        $("#price").autoNumeric('init', {
+            aSep: '.',
+            aDec: ',',
+            aForm: true,
+            vMax: '999999999',
+            vMin: '-999999999'
+        });
+        // new AutoNumeric('#price', {
+        //     digitGroupSeparator: '.',
+        //     decimalCharacter: ',',
+        //     decimalPlaces: 2,
+        //     currencySymbol: 'Rp. ',
+        //     currencySymbolPlacement: 'p',
+        //     unformatOnSubmit: true
+        // });
         //-------------------------------------------------- Delete --------------------------------------------------\\
     });
 </script>

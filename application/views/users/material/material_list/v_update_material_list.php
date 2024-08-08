@@ -90,7 +90,7 @@
                         <input type="text" class="form-control" id="name_machine" name="name_machine" placeholder="Name Machine" readonly value="<?= $material->code_machine ?>">
                     </div>
                     <div class="form-group">
-                        <label for="life_time_part">Life Time Part</label>
+                        <label for="life_time_part">Life Time Part(Month)</label>
                         <input type="text" class="form-control" id="life_time_part" name="life_time_part" placeholder="Enter Life Time Part" value="<?= $material->life_time_part ?>">
                     </div>
                     <div class="form-group">
@@ -106,17 +106,37 @@
                         <select class="form-control select2" id="uom" name="uom" style="width: 100%;">
                             <option selected="selected" value="">- Select Uom -</option>
                         </select>
-                        <input type="hidden" class="form-control" id="code_uom" name="code_uom" placeholder="Code Line" readonly value="<?= $material->code_uom ?>">
-                        <input type="text" class="form-control" id="name_uom" name="name_uom" placeholder="Name Line" readonly value="<?= $material->name_uom ?>">
+                        <input type="hidden" class="form-control" id="code_uom" name="code_uom" placeholder="Code Uom" readonly value="<?= $material->code_uom ?>">
+                        <input type="text" class="form-control" id="name_uom" name="name_uom" placeholder="Name UOM" readonly value="<?= $material->name_uom ?>">
                     </div>
                     <div class="form-group">
-                        <label>Location</label>
+                        <label>Storage Location</label>
                         <select class="form-control select2" id="location" name="location" style="width: 100%;">
                             <option selected="selected" value="">- Select Location -</option>
                         </select>
-                        <input type="hidden" class="form-control" id="code_location" name="code_location" placeholder="Code Line" readonly value="<?= $material->code_location ?>">
-                        <input type="text" class="form-control" id="name_location" name="name_location" placeholder="Name Line" readonly value="<?= $material->name_location ?>">
+                        <input type="hidden" class="form-control" id="code_location" name="code_location" placeholder="Code Location" readonly value="<?= $material->code_location ?>">
+                        <input type="text" class="form-control" id="name_location" name="name_location" placeholder="Name Location" readonly value="<?= $material->name_location ?>">
                     </div>
+                    <div class="form-group">
+                    <label for="minimum_stock">Minimum Stock</label>
+                    <input type="number" class="form-control" id="minimum_stock" name="minimum_stock"
+                        placeholder="Enter Minimum Stock" value="<?= $material->minimum_stock ?>">
+                </div>
+                <div class="form-group">
+                    <label for="maximal_stock">Maximum Stock</label>
+                    <input type="number" class="form-control" id="maximal_stock" name="maximal_stock"
+                        placeholder="Enter Maximal Stock" value="<?= $material->maximal_stock ?>">
+                </div>
+                <div class="form-group">
+                    <label for="safety_stock">Safety Stock</label>
+                    <input type="number" class="form-control" id="safety_stock" name="safety_stock"
+                        placeholder="Enter Safety Stock" value="<?= $material->safety_stock ?>">
+                </div>
+                <div class="form-group">
+                    <label for="rop">ROP(REORDER POINT)</label>
+                    <input type="number" class="form-control" id="rop" name="rop"
+                        placeholder="Enter ROP(REORDER POINT)" value="<?= $material->rop ?>">
+                </div>
                 <?php endforeach; ?>
             </div>
             <!-- /.card-body -->

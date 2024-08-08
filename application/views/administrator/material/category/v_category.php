@@ -14,7 +14,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -91,8 +91,8 @@ input[type="text"] {
                 <table id="tbl_category" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>CODE CATEGORY</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">CODE CATEGORY</th>
                             <th>NAME CATEGORY</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -102,8 +102,8 @@ input[type="text"] {
                         $no = 1;
                         foreach ($category as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $value->code_category ?></td>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td class="text-center"><?= $value->code_category ?></td>
                             <td><?= $value->name_category ?></td>
                             <td class="text-center">
                                 <!-- Button trigger modal -->
@@ -119,14 +119,6 @@ input[type="text"] {
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>NO</th>
-                            <th>CODE CATEGORY</th>
-                            <th>NAME CATEGORY</th>
-                            <th class="text-center">ACTION</th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <!-- /.card-body -->
@@ -186,14 +178,17 @@ input[type="text"] {
 $(document).ready(function() {
     $("#tbl_category").DataTable({
         "scrollX": true,
-        "responsive": true,
+        "responsive": false,
         "lengthChange": true,
         "autoWidth": false,
-        // select: {
-        //     selected: false,
-        //     style: 'multi'
-        // },
-        
+        "bStateSave": true,
+        "scrollY": 400,
+        "fnStateSave": function(oSettings, oData) {
+            localStorage.setItem('offersDataTables', JSON.stringify(oData));
+        },
+        "fnStateLoad": function(oSettings) {
+            return JSON.parse(localStorage.getItem('offersDataTables'));
+        },
     }).buttons().container().appendTo('#tbl_category_wrapper .col-md-6:eq(0)');
 
     //-------------------------------------------------- Update --------------------------------------------------\\

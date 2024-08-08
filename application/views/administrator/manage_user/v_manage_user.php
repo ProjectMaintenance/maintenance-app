@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -87,11 +87,11 @@
                     <thead>
                         <tr>
                         <tr>
-                            <th>NO</th>
+                            <th class="text-center">NO</th>
                             <th>NAME</th>
                             <th>USERNAME</th>
-                            <th>ROLE</th>
-                            <th>IS ACTIVE</th>
+                            <th class="text-center">ROLE</th>
+                            <th class="text-center">IS ACTIVE</th>
                             <th>DATE CREATED</th>
                             <th>LAST LOGIN</th>
                             <th class="text-center">ACTION</th>
@@ -104,11 +104,11 @@
                         $no = 1;
                         foreach ($users as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
+                            <td class="text-center"><?= $no++ ?></td>
                             <td><?= $value->name ?></td>
                             <td><?= $value->username ?></td>
-                            <td><?= $value->name_role ?></td>
-                            <td><?= $value->is_active == 1 ? "Active" : "Non Active" ?></td>
+                            <td class="text-center"><?= $value->name_role ?></td>
+                            <td class="text-center"><?= $value->is_active == 1 ? "Active" : "Non Active" ?></td>
                             <td><?= $value->date_created ?></td>
                             <td><?= $value->last_login ?></td>
                             <td class="text-center">
@@ -319,11 +319,21 @@ $(function() {
         "responsive": false,
         "lengthChange": true,
         "autoWidth": false,
+        "bStateSave": true,
+        paging: true,
+        scrollCollapse: true,
+        scrollY: '86vh',
+        "fnStateSave": function(oSettings, oData) {
+            localStorage.setItem('offersDataTables', JSON.stringify(oData));
+        },
+        "fnStateLoad": function(oSettings) {
+            return JSON.parse(localStorage.getItem('offersDataTables'));
+        },
         // select: {
         //     selected: true,
         //     style: 'multi'
         // },
-       
+
     }).buttons().container().appendTo('#tbl_users_wrapper .col-md-6:eq(0)');
 });
 //-------------------------------------------------- Update --------------------------------------------------\\

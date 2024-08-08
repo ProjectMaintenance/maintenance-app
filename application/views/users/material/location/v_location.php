@@ -15,7 +15,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-               
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -30,10 +30,10 @@ input[type="text"] {
                     <a href="<?= site_url('users/add_location') ?>" class="btn btn-primary"><i
                             class="fas fa-plus mr-2"></i>Add Data</a>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success" data-toggle="modal"
+                    <!-- <button type="button" class="btn btn-success" data-toggle="modal"
                         data-target="#upload_excel_location">
                         <i class="fas fa-upload mr-2"></i>Upload Excel
-                    </button>
+                    </button> -->
 
                     <!-- Modal -->
                     <div class="modal fade" id="upload_excel_location" data-backdrop="static" data-keyboard="false"
@@ -92,7 +92,7 @@ input[type="text"] {
                 <table id="tbl_location" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
+                            <th class="text-center">NO</th>
                             <th>NAME LOCATION</th>
                         </tr>
                     </thead>
@@ -101,7 +101,7 @@ input[type="text"] {
                         $no = 1;
                         foreach ($location as $value) : ?>
                         <tr>
-                            <td><?= $no++; ?></td>
+                            <td class="text-center"><?= $no++; ?></td>
                             <td><?= $value->name_location ?></td>
                         </tr>
                         <?php endforeach; ?>
@@ -128,14 +128,22 @@ $(document).ready(function() {
 
         $("#tbl_location").DataTable({
             "scrollX": true,
-            "responsive": true,
+            "responsive": false,
             "lengthChange": true,
             "autoWidth": false,
+            "bStateSave": true,
+            "scrollY": 400,
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            },
             // select: {
             //     selected: false,
             //     style: 'multi'
             // },
-            
+
         }).buttons().container().appendTo('#tbl_location_wrapper .col-md-6:eq(0)');
     });
 

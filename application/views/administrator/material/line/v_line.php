@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-               
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -41,9 +41,9 @@
                 <table id="tbl_line" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
+                            <th class="text-center">NO</th>
                             <th>NAME AREA</th>
-                            <th>CODE LINE</th>
+                            <th class="text-center">CODE LINE</th>
                             <th>NAME LINE</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -53,9 +53,9 @@
                         $no = 1;
                         foreach ($line as $value) : ?>
                             <tr>
-                                <td><?= $no++ ?></td>
+                                <td class="text-center"><?= $no++ ?></td>
                                 <td><?= $value->name_area; ?></td>
-                                <td><?= $value->code_line; ?></td>
+                                <td class="text-center"><?= $value->code_line; ?></td>
                                 <td><?= $value->name_line; ?></td>
                                 <td class="text-center">
                                     <!-- Button trigger modal -->
@@ -67,15 +67,6 @@
                             </tr>
                         <?php endforeach ?>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>NO</th>
-                            <th>NAME AREA</th>
-                            <th>CODE LINE</th>
-                            <th>NAME LINE</th>
-                            <th class="text-center">ACTION</th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <!-- /.card-body -->
@@ -134,16 +125,24 @@
 
         $("#tbl_line").DataTable({
             "scrollX": true,
-        "responsive": true,
-        "lengthChange": true,
-        "autoWidth": false,
-        // select: {
-        //     selected: false,
-        //     style: 'multi'
-        // },
-        
-    }).buttons().container().appendTo('#tbl_category_wrapper .col-md-6:eq(0)');
-            
+            "responsive": false,
+            "lengthChange": true,
+            "autoWidth": false,
+            "bStateSave": true,
+            "scrollY": 400,
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            },
+            // select: {
+            //     selected: false,
+            //     style: 'multi'
+            // },
+
+        }).buttons().container().appendTo('#tbl_category_wrapper .col-md-6:eq(0)');
+
 
         //-------------------------------------------------- Update --------------------------------------------------\\
 

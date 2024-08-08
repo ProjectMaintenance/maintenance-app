@@ -12,7 +12,8 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?= base_url('assets/image/') ?>logo/default-profil.png" class="img-circle elevation-2" alt="User Image">
+                <img src="<?= base_url('assets/image/') ?>logo/default-profil.png" class="img-circle elevation-2"
+                    alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block"><?= $session['name'] ?></a>
@@ -115,7 +116,8 @@
                         </li>
                         <?php $detail_material = (uri_string() == 'admin/detail_material_list') ? 'active' : ''; ?>
                         <li class="nav-item">
-                            <a href="<?= site_url('admin/detail_material_list') ?>" class="nav-link <?= $detail_material; ?>">
+                            <a href="<?= site_url('admin/detail_material_list') ?>"
+                                class="nav-link <?= $detail_material; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Detail Material</p>
                             </a>
@@ -156,12 +158,24 @@
                         </li>
                         <?php $hist_transaction = (uri_string() == 'admin/history_transaction') ? 'active' : ''; ?>
                         <li class="nav-item">
-                            <a href="<?= site_url('admin/history_transaction') ?>" class="nav-link <?= $hist_transaction; ?>">
+                            <a href="<?= site_url('admin/history_transaction') ?>"
+                                class="nav-link <?= $hist_transaction; ?>">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>History Transaction</p>
                             </a>
                         </li>
                     </ul>
+                </li>
+                <?php 
+                $params = $this->uri->segment(3);
+                $req_order = (uri_string() == 'admin/req_order' || uri_string() == 'admin/add_req_order' || uri_string() == 'admin/add_material_for_req_order' || uri_string() == 'admin/update_req_order/' . $params) ? 'active' : ''; ?>
+                <li class="nav-item">
+                    <a href="<?= site_url('admin/req_order') ?>" class="nav-link <?= $req_order; ?>">
+                        <i class="nav-icon fas fa-box-open"></i>
+                        <p>
+                            Request Order
+                        </p>
+                    </a>
                 </li>
                 <?php $change_password = (uri_string() == 'admin/change_password') ? 'active' : ''; ?>
                 <li class="nav-item">
@@ -172,14 +186,14 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="" class="nav-link">
                         <i class="nav-icon fas fa-file-pdf"></i>
                         <p>
                             Guide Book
                         </p>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="<?= site_url('auth/logout'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>

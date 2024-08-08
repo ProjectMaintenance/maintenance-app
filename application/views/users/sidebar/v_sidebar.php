@@ -166,8 +166,17 @@
                         </li>
                     </ul>
                 </li>
-                <?php $change_password = (uri_string() == 'users/change_password') ? 'active' : ''; ?>
+                <?php $req_order = (uri_string() == 'users/req_order' || uri_string() == 'users/add_req_order') ? 'active' : ''; ?>
                 <li class="nav-item">
+                    <a href="<?= site_url('users/req_order') ?>" class="nav-link <?= $req_order; ?>">
+                        <i class="nav-icon fas fa-box-open"></i>
+                        <p>
+                            Request Order
+                        </p>
+                    </a>
+                </li>
+                <?php $change_password = (uri_string() == 'users/change_password') ? 'active' : ''; ?>
+                <li class=" nav-item">
                     <a href="<?= site_url('users/change_password') ?>" class="nav-link <?= $change_password; ?>">
                         <i class="nav-icon fas fa-key"></i>
                         <p>
@@ -175,14 +184,14 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="" class="nav-link">
                         <i class="nav-icon fas fa-file-pdf"></i>
                         <p>
                             Guide Book
                         </p>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="<?= site_url('auth/logout'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>

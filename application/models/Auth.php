@@ -41,7 +41,7 @@ class Auth extends CI_Model
                     } elseif ($check_login['id_role'] == 3) {
                         return [
                             'success'   => true,
-                            'message'   => 'Login Successfully as Maintenance PIC',
+                            'message'   => 'Login Successfully as User',
                             'id_role'   => 3
                         ];
                     }

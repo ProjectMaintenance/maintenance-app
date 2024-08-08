@@ -18,7 +18,18 @@ input[type="text"] {
 
     <!-- Main content -->
     <section class="content">
-
+        <?php if ($this->session->flashdata('msg_code_material'.$this->session->userdata('username'))) { ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert"
+            style="background-color: #d4edda; color: #155724; border-color: #c3e6cb">
+            Code Material
+            <strong><?= $this->session->flashdata('msg_code_material' . $this->session->userdata('username')); ?></strong>
+            Saved
+            Successfuly
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <?php } ?>
         <!-- Default box -->
         <div class="card card-primary">
             <div class="card-header">
@@ -30,23 +41,23 @@ input[type="text"] {
             <div class="card-body">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                     value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="code_material">Material Code</label>
                     <input type="text" class="form-control" id="code_material" name="code_material"
                         placeholder="Material Code" readonly>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label>Category</label>
                     <select class="form-control select2" id="category" name="category" style="width: 100%;">
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="part_name">Part Name</label>
+                    <label for="part_name">Name</label>
                     <input type="text" class="form-control" id="part_name" name="part_name"
                         placeholder="Enter Part Name">
                 </div>
                 <div class="form-group">
-                    <label for="part_type">Model / Part Type</label>
+                    <label for="part_type">Model / Type</label>
                     <input type="text" class="form-control" id="part_type" name="part_type"
                         placeholder="Enter Model / Part Type">
                 </div>
@@ -92,7 +103,7 @@ input[type="text"] {
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="life_time_part">Life Time Part</label>
+                    <label for="life_time_part">Life Time Part (Month)</label>
                     <input type="text" class="form-control" id="life_time_part" name="life_time_part"
                         placeholder="Enter Life Time Part">
                 </div>
@@ -113,16 +124,38 @@ input[type="text"] {
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Location</label>
+                    <label>Storage Location</label>
                     <select class="form-control select2" id="location" name="location" style="width: 100%;">
                         <option selected="selected" value="">- Select Location -</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="minimum_stock">Minimum stock</label>
+                    <input type="number" class="form-control" id="minimum_stock" name="minimum_stock"
+                        placeholder="Enter minimum stock">
+                </div>
+                <div class="form-group">
+                    <label for="maximal_stock">Maximum Stock</label>
+                    <input type="number" class="form-control" id="maximal_stock" name="maximal_stock"
+                        placeholder="Enter maximal stock">
+                </div>
+                <div class="form-group">
+                    <label for="safety_stock">Safety Stock</label>
+                    <input type="number" class="form-control" id="safety_stock" name="safety_stock"
+                        placeholder="Enter safety stock">
+                </div>
+                <div class="form-group">
+                    <label for="rop">ROP(REORDER POINT)</label>
+                    <input type="number" class="form-control" id="rop" name="rop"
+                        placeholder="Enter ROP(REORDER POINT)">
+                </div>
+
             </div>
             <!-- /.card-body -->
 
             <div class="card-footer">
-            <a type="button" class="btn btn-danger" href="<?=base_url('users/material_list')?>"" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                <a type="button" class="btn btn-danger" href="<?= base_url('users/material_list') ?>"" name="
+                    btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                 <button type="submit" class="btn btn-primary">Save</button>
                 <!-- <button type="reset" class="btn btn-danger">Reset</button> -->
             </div>
@@ -157,41 +190,6 @@ $(document).ready(function() {
             $.each(response.category, function(key, value) {
                 $('#category').append('<option value="' + value.code_category + '">' +
                     value.name_category + '</option>');
-            });
-
-            $('#category').change(function(e) {
-                e.preventDefault();
-
-                var code_category = $(this).find('option:selected').val();
-
-                if (code_category === null || code_category.trim() === '') {
-                    $('#code_material').val('');
-                    return;
-                }
-
-                $(this).valid();
-
-                $.ajax({
-                    type: "POST",
-                    url: "<?= site_url('users/generate_material_code') ?>",
-                    data: {
-                        code_category: code_category
-                    },
-                    dataType: "JSON",
-                    success: function(response) {
-                        $('#code_material').val(response.material_code);
-                        $('#category').change(function(e) {
-                            e.preventDefault();
-                            $(this).valid();
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('AJAX Error:', status, error);
-                        toastr.error(
-                            'An error occurred while processing the request.'
-                        );
-                    }
-                });
             });
 
             $('#area').empty();

@@ -34,27 +34,31 @@
                 <table id="tbl_material_list" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>MATERIAL CODE</th>
-                            <th>BARCODE</th>
-                            <th>CODE CATEGORY</th>
-                            <th>CATEGORY</th>
-                            <th>PART NAME</th>
-                            <th>PART TYPE</th>
-                            <th>PART NUMBER MAKER</th>
-                            <th>PART CODE MACHINE</th>
-                            <th>PART DRAWING</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">MATERIAL CODE</th>
+                            <th class="text-center">BARCODE</th>
+                            <th class="text-center">CODE CATEGORY</th>
+                            <th class="text-center">CATEGORY</th>
+                            <th>NAME</th>
+                            <th class="text-center">MODEL / TYPE</th>
+                            <th class="text-center">PART NUMBER MAKER</th>
+                            <th class="text-center">PART CODE MACHINE</th>
+                            <th class="text-center">PART DRAWING</th>
                             <th>PART MAKER</th>
                             <th>ADDITIONAL DESCRIPTION</th>
-                            <th>SPESIFICATION</th>
+                            <th>DESCRIPTION</th>
                             <th>AREA</th>
-                            <th>LINE</th>
+                            <th class="text-center">LINE</th>
                             <th>MACHINE</th>
-                            <th>LIFE TIME PART</th>
-                            <th>QTY ON MACHINE</th>
-                            <th>QTY STOCK</th>
-                            <th>UOM</th>
-                            <th>LOCATION</th>
+                            <th class="text-center">LIFE TIME PART(MONTH)</th>
+                            <th class="text-center">QTY ON MACHINE</th>
+                            <th class="text-center">QTY STOCK</th>
+                            <th class="text-center">UOM</th>
+                            <th class="text-center">STORAGE LOCATION</th>
+                            <th class="text-center">MINIMUM STOCK</th>
+                            <th class="text-center">MAXIMUM STOCK</th>
+                            <th class="text-center">SAFETY STOCK</th>
+                            <th class="text-center">ROP(REORDER POINT)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,29 +66,34 @@
                         $no = 1;
                         foreach ($material as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $value->code_material ?></td>
-                            <td><?php $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
-                                    echo '<img src="data:image/png;base64,' . base64_encode($generator->getBarcode($value->code_material, $generator::TYPE_CODE_128)) . '">'; ?>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td class="text-center"><?= $value->code_material ?></td>
+                            <td class="text-center">
+                                <?php $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+                                                        echo '<img src="data:image/png;base64,' . base64_encode($generator->getBarcode($value->code_material, $generator::TYPE_CODE_128)) . '">'; ?>
                             </td>
                             <td class="text-center"><?= $value->code_category ?></td>
-                            <td><?= $value->name_category ?></td>
+                            <td class="text-center"><?= $value->name_category ?></td>
                             <td><?= $value->part_name ?></td>
-                            <td><?= $value->part_type ?></td>
-                            <td><?= $value->part_number_maker ?></td>
-                            <td><?= $value->part_code_machine ?></td>
-                            <td><?= $value->part_drawing ?></td>
+                            <td class="text-center"><?= $value->part_type ?></td>
+                            <td class="text-center"><?= $value->part_number_maker ?></td>
+                            <td class="text-center"><?= $value->part_code_machine ?></td>
+                            <td class="text-center"><?= $value->part_drawing ?></td>
                             <td><?= $value->maker ?></td>
                             <td><?= $value->additional_description ?></td>
                             <td><?= $value->specification_material ?></td>
                             <td><?= $value->name_area ?></td>
-                            <td><?= $value->name_line ?></td>
+                            <td class="text-center"><?= $value->name_line ?></td>
                             <td><?= $value->code_machine ?></td>
-                            <td><?= $value->life_time_part ?></td>
-                            <td class="text-right"><?= $value->qty_on_machine ?></td>
-                            <td class="text-right"><?= $value->qty_stock ?></td>
+                            <td class="text-center"><?= $value->life_time_part ?></td>
+                            <td class="text-center"><?= $value->qty_on_machine ?></td>
+                            <td class="text-center"><?= $value->qty_stock ?></td>
                             <td class="text-center"><?= $value->code_uom ?></td>
                             <td class="text-center"><?= $value->name_location ?></td>
+                            <td class="text-center"><?= $value->minimum_stock ?></td>
+                            <td class="text-center"><?= $value->maximal_stock ?></td>
+                            <td class="text-center"><?= $value->safety_stock ?></td>
+                            <td class="text-center"><?= $value->rop ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -112,32 +121,41 @@ $(document).ready(function() {
             "responsive": false,
             "lengthChange": true,
             "autoWidth": false,
+            "bStateSave": true,
+            paging: true,
+            scrollCollapse: true,
+            scrollY: '75vh',
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            },
             // select: {
             //     selected: true,
             //     style: 'multi'
             // },
             "buttons": [{
-                    extend: "excel",
-                    text: '<i class="fas fa-file-excel mr-2"></i> EXCEL',
-                    className: 'btn-success',
-                    title: '',
-                    exportOptions: {
-                        stripHtml: false,
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-                            16, 17, 18, 19
-                        ], // Indeks kolom yang ingin dicetak
-                    },
-                    customizeData: function(excelData) {
-                        // Menambahkan bintang di depan dan di belakang setiap nilai di kolom Barcode
-                        for (var i = 0; i < excelData.body.length; i++) {
-                            // Kolom Barcode berada pada indeks 2 (diasumsikan indeks kolom Barcode adalah 2)
-                            // Kolom "MATERIAL CODE" berada pada indeks 1 (diasumsikan indeks kolom "MATERIAL CODE" adalah 1)
-                            excelData.body[i][2] = '*' + excelData.body[i][1] +
-                                '*'; // Menambahkan bintang di depan dan di belakang
-                        }
+                extend: "excel",
+                text: '<i class="fas fa-file-excel mr-2"></i> EXCEL',
+                className: 'btn-success',
+                title: '',
+                exportOptions: {
+                    stripHtml: false,
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+                        16, 17, 18, 19, 20, 21, 22, 23, 24
+                    ], // Indeks kolom yang ingin dicetak
+                },
+                customizeData: function(excelData) {
+                    // Menambahkan bintang di depan dan di belakang setiap nilai di kolom Barcode
+                    for (var i = 0; i < excelData.body.length; i++) {
+                        // Kolom Barcode berada pada indeks 2 (diasumsikan indeks kolom Barcode adalah 2)
+                        // Kolom "MATERIAL CODE" berada pada indeks 1 (diasumsikan indeks kolom "MATERIAL CODE" adalah 1)
+                        excelData.body[i][2] = '*' + excelData.body[i][1] +
+                            '*'; // Menambahkan bintang di depan dan di belakang
                     }
                 }
-            ]
+            }]
         }).buttons().container().appendTo('#tbl_material_list_wrapper .col-md-6:eq(0)');
     });
 });

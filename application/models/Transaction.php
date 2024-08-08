@@ -6,8 +6,13 @@ class Transaction extends CI_Model
     public $transaction_type;
     public $date;
     public $code_material;
+    public $code_area;
+    public $code_line;
+    public $code_machine;
     public $qty;
     public $identity_pic;
+    public $other_identity_pic;
+    public $price;
     public $description;
     //------------------------------------- Goods Receive -------------------------------------\\
 
@@ -36,22 +41,44 @@ class Transaction extends CI_Model
 
     public function save_good_receive()
     {
-        $this->id_transaction = $this->input->post('id_transaction');
-        $this->transaction_type = 'GR';
-        $this->date = $this->input->post('datetime');
-        $formatted_datetime = date('Y-m-d H:i:s', strtotime($this->date));
-        $this->code_material = $this->input->post('code_material');
-        $this->qty = $this->input->post('quantity');
-        $this->identity_pic = $this->input->post('identity_pic');
-        $this->description = $this->input->post('description');
+        date_default_timezone_set('Asia/Jakarta');
+        $formattedDate = date('Y-m-d H:i:s');
+
+        $this->id_transaction       = $this->input->post('id_transaction');
+        $this->transaction_type     = 'GR';
+        $this->date                 = $formattedDate;
+        $this->code_material        = $this->input->post('code_material');
+        $this->qty                  = $this->input->post('quantity');
+        $this->identity_pic         = $this->input->post('identity_pic');
+        $this->other_identity_pic   = $this->input->post('other_identity_pic');
+        $price_input                = $this->input->post('price');
+        $this->price = str_replace(['Rp ', '.', ','], ['', ''], $price_input);
+        if (!empty($price_input)) {
+            $this->price = str_replace(['Rp ', '.', ','], ['', ''], $price_input);
+            if (!is_numeric($this->price)) {
+                // Handle the error if the price is not numeric
+                echo "Invalid price input.";
+                return;
+            }
+        } else {
+            // Handle the error if the price is empty
+            echo "Price input is required.";
+            return;
+        }
+        $this->description          = $this->input->post('description');
+        if ($this->identity_pic     == "0") {
+            $this->identity_pic     = $this->other_identity_pic;
+        }
+
         $data = [
-            'id_transaction'    => strtoupper($this->id_transaction),
-            'transaction_type'  => strtoupper($this->transaction_type),
-            'date'              => $formatted_datetime,
-            'code_material'     => strtoupper($this->code_material),
-            'quantity'          => $this->qty,
-            'identity_pic'      => strtoupper($this->identity_pic),
-            'description'       => strtoupper($this->description),
+            'id_transaction'        => strtoupper($this->id_transaction),
+            'transaction_type'      => strtoupper($this->transaction_type),
+            'date'                  => $formattedDate,
+            'code_material'         => strtoupper($this->code_material),
+            'quantity'              => $this->qty,
+            'identity_pic'          => strtoupper($this->identity_pic),
+            'price'                 => $this->price,
+            'description'           => strtoupper($this->description),
         ];
 
 
@@ -61,12 +88,12 @@ class Transaction extends CI_Model
             if ($query) {
                 return [
                     'success' => true,
-                    'message' => 'Data Receive Success'
+                    'message' => 'Transaction Good Receive Successfully'
                 ];
             } else {
                 return [
                     'success' => false,
-                    'message' => 'Failed to insert data'
+                    'message' => 'Transaction Good Receive Failed'
                 ];
             }
         } catch (Exception $e) {
@@ -80,39 +107,37 @@ class Transaction extends CI_Model
 
     public function update_goods_receive()
     {
-        // Set zona waktu ke 'Asia/Jakarta'
         date_default_timezone_set('Asia/Jakarta');
+        $formattedDate = date('Y-m-d H:i:s');
 
-        // Ambil nilai input tanggal dari POST data
-        $date_transaction = $this->input->post('date_transaction');
+        $this->id_transaction       = $this->input->post('id_transaction');
+        $this->transaction_type     = 'GR';
+        $this->date                 = $formattedDate;
+        $this->code_material        = $this->input->post('code_material');
+        $this->qty                  = $this->input->post('quantity');
+        $this->identity_pic         = $this->input->post('identity_pic');
+        $this->other_identity_pic   = $this->input->post('other_identity_pic');
+        $price_input = $this->input->post('price');
+        $this->price = str_replace(['Rp ', '.', ','], ['', '', '.'], $price_input);
+        if (!is_numeric($this->price)) {
+            // Handle the error if the price is not numeric
+            echo "Invalid price input.";
+            return;
+        }
+        $this->description          = $this->input->post('description');
 
-        // Jika tanggal transaksi diubah, perbarui waktu sesuai dengan waktu saat ini
-        if ($this->input->post('date_transaction') != $this->input->post('old_date_transaction')) {
-            // Perbarui nilai input waktu dengan waktu saat ini
-            $current_time = date('H:i:s');
-            $date_transaction .= ' ' . $current_time;
+        if ($this->identity_pic     == "0") {
+            $this->identity_pic     = $this->other_identity_pic;
         }
 
-        // Format ulang tanggal dan waktu
-        $formatted_datetime = date('Y-m-d H:i:s', strtotime($date_transaction));
-
-        // Tetapkan nilai ke properti objek
-        $this->id_transaction   = $this->input->post('id_transaction');
-        $this->transaction_type = 'GR';
-        $this->date             = $formatted_datetime;
-        $this->code_material    = $this->input->post('code_material');
-        $this->qty              = $this->input->post('quantity');
-        $this->identity_pic     = $this->input->post('identity_pic');
-        $this->description      = $this->input->post('description');
-
-        // Bentuk data untuk update
         $data = [
-            'transaction_type'  => strtoupper($this->transaction_type),
-            'date'              => $formatted_datetime,
-            'code_material'     => strtoupper($this->code_material),
-            'quantity'          => $this->qty,
-            'identity_pic'      => strtoupper($this->identity_pic),
-            'description'       => strtoupper($this->description),
+            'transaction_type'      => strtoupper($this->transaction_type),
+            'date'                  => $this->date,
+            'code_material'         => strtoupper($this->code_material),
+            'quantity'              => $this->qty,
+            'identity_pic'          => strtoupper($this->identity_pic),
+            'price'                 => $this->price,
+            'description'           => strtoupper($this->description),
         ];
 
         // Lakukan update di database
@@ -121,12 +146,12 @@ class Transaction extends CI_Model
         if ($query) {
             return [
                 'success'   => true,
-                'message'   => 'Data Issue Success'
+                'message'   => 'Update Transaction Good Receive Successfully'
             ];
         } else {
             return [
                 'success'   => false,
-                'message'   => 'Failed to update data'
+                'message'   => 'Update Transaction Good Receive Failed'
             ];
         }
     }
@@ -145,9 +170,11 @@ class Transaction extends CI_Model
 
     public function get_all_good_issue()
     {
-        $this->db->select('tbl_transaction.*, tbl_material.*');
+        $this->db->select('*');
         $this->db->from('tbl_transaction');
         $this->db->join('tbl_material', 'tbl_transaction.code_material = tbl_material.code_material', 'left');
+        $this->db->join('tbl_area', 'tbl_transaction.code_area = tbl_area.code_area', 'left');
+        $this->db->join('tbl_line', 'tbl_transaction.code_line = tbl_line.code_line', 'left');
         $this->db->where('tbl_transaction.transaction_type', 'GI');
         $query = $this->db->get();
         return $query->result();
@@ -155,20 +182,30 @@ class Transaction extends CI_Model
 
     public function save_good_issue()
     {
-        // Mengambil data dari input
-        $id_transaction = strtoupper($this->input->post('id_transaction'));
-        $date = $this->input->post('datetime');
-        $formatted_datetime = date('Y-m-d H:i:s', strtotime($date));
-        $code_material = strtoupper($this->input->post('code_material'));
-        $qty_requested = $this->input->post('quantity');
-        $identity_pic = strtoupper($this->input->post('identity_pic'));
-        $description = strtoupper($this->input->post('description'));
+        date_default_timezone_set('Asia/Jakarta');
+        $formattedDate = date('Y-m-d H:i:s');
+
+        $this->id_transaction       = $this->input->post('id_transaction');
+        $this->transaction_type     = 'GI';
+        $this->date                 = $formattedDate;
+        $this->code_material        = $this->input->post('code_material');
+        $this->code_area            = $this->input->post('area');
+        $this->code_line            = $this->input->post('line');
+        $this->code_machine         = $this->input->post('machine') ? implode(', ', $this->input->post('machine')) : ''; // Menggunakan implode untuk menyimpan array nilai machine
+        $this->qty                  = $this->input->post('quantity');
+        $this->identity_pic         = $this->input->post('identity_pic');
+        $this->other_identity_pic   = $this->input->post('other_identity_pic');
+        $this->description          = $this->input->post('description');
+
+        if ($this->identity_pic     == "0") {
+            $this->identity_pic     = $this->other_identity_pic;
+        }
 
         // Memeriksa stok barang yang tersedia
-        $available_stock = $this->get_available_stock($code_material);
+        $available_stock    = $this->get_available_stock($this->code_material);
 
         // Memeriksa apakah permintaan melebihi stok yang tersedia
-        if ($qty_requested > $available_stock) {
+        if ($this->qty > $available_stock) {
             return [
                 'success' => false,
                 'message' => 'Quantity requested exceeds existing stock'
@@ -177,13 +214,16 @@ class Transaction extends CI_Model
 
         // Menyiapkan data untuk disimpan
         $data = [
-            'id_transaction'    => $id_transaction,
-            'transaction_type'  => 'GI',
-            'date'              => $formatted_datetime,
-            'code_material'     => $code_material,
-            'quantity'          => $qty_requested,
-            'identity_pic'      => $identity_pic,
-            'description'       => $description,
+            'id_transaction'        => strtoupper($this->id_transaction),
+            'transaction_type'      => strtoupper($this->transaction_type),
+            'date'                  => $formattedDate,
+            'code_material'         => strtoupper($this->code_material),
+            'code_area'             => $this->code_area,
+            'code_line'             => $this->code_line,
+            'name_machine'          => $this->code_machine,
+            'quantity'              => $this->qty,
+            'identity_pic'          => strtoupper($this->identity_pic),
+            'description'           => strtoupper($this->description),
         ];
 
         // Menyisipkan data ke dalam tabel
@@ -195,12 +235,12 @@ class Transaction extends CI_Model
             if ($query) {
                 return [
                     'success' => true,
-                    'message' => 'Data Receive Success'
+                    'message' => 'Transaction Good Issue Successfully'
                 ];
             } else {
                 return [
                     'success' => false,
-                    'message' => 'Failed to insert data'
+                    'message' => 'Transaction Good Issue Failed'
                 ];
             }
         } catch (Exception $e) {
@@ -234,36 +274,32 @@ class Transaction extends CI_Model
 
     public function update_goods_issue()
     {
-        // Set zona waktu ke 'Asia/Jakarta'
         date_default_timezone_set('Asia/Jakarta');
+        $formattedDate = date('Y-m-d H:i:s');
 
-        // Ambil nilai input tanggal dari POST data
-        $date_transaction = $this->input->post('date_transaction');
+        $this->id_transaction       = $this->input->post('id_transaction');
+        $this->transaction_type     = 'GI';
+        $this->date                 = $formattedDate;
+        $this->code_material        = $this->input->post('code_material');
+        $this->code_area            = $this->input->post('area');
+        $this->code_line            = $this->input->post('line');
+        $this->code_machine         = $this->input->post('machine') ? implode(', ', $this->input->post('machine')) : ''; // Menggunakan implode untuk menyimpan array nilai machine
+        $this->qty                  = $this->input->post('quantity');
+        $this->identity_pic         = $this->input->post('identity_pic');
+        $this->other_identity_pic   = $this->input->post('other_identity_pic');
+        $this->description          = $this->input->post('description');
 
-        // Jika tanggal transaksi diubah, perbarui waktu sesuai dengan waktu saat ini
-        if ($this->input->post('date_transaction') != $this->input->post('old_date_transaction')) {
-            // Perbarui nilai input waktu dengan waktu saat ini
-            $current_time = date('H:i:s');
-            $date_transaction .= ' ' . $current_time;
+        if ($this->identity_pic     == "0") {
+            $this->identity_pic     = $this->other_identity_pic;
         }
 
-        // Format ulang tanggal dan waktu
-        $formatted_datetime = date('Y-m-d H:i:s', strtotime($date_transaction));
-
-        // Tetapkan nilai ke properti objek
-        $this->id_transaction   = $this->input->post('id_transaction');
-        $this->transaction_type = 'GI';
-        $this->date             = $formatted_datetime;
-        $this->code_material    = $this->input->post('code_material');
-        $this->qty              = $this->input->post('quantity');
-        $this->identity_pic     = $this->input->post('identity_pic');
-        $this->description      = $this->input->post('description');
-
-        // Bentuk data untuk update
         $data = [
             'transaction_type'  => strtoupper($this->transaction_type),
-            'date'              => $formatted_datetime,
+            'date'              => $this->date,
             'code_material'     => strtoupper($this->code_material),
+            'code_area'         => $this->code_area,
+            'code_line'         => $this->code_line,
+            'name_machine'      => $this->code_machine,
             'quantity'          => $this->qty,
             'identity_pic'      => strtoupper($this->identity_pic),
             'description'       => strtoupper($this->description),
@@ -275,7 +311,12 @@ class Transaction extends CI_Model
         if ($query) {
             return [
                 'success'   => true,
-                'message'   => 'Data Issue Success'
+                'message'   => 'Update Transaction Good Issue Successfully'
+            ];
+        } else {
+            return [
+                'success'   => false,
+                'message'   => 'Update Transaction Good Issue Failed'
             ];
         }
     }
@@ -294,22 +335,37 @@ class Transaction extends CI_Model
         }
     }
 
+   
+
     public function get_transaction_detail()
     {
-        $query = $this->db->get('tbl_transaction');
+        $this->db->select('*');
+        $this->db->from('tbl_transaction');
+        $this->db->join('tbl_material', 'tbl_material.code_material = tbl_transaction.code_material');
+        $this->db->join('tbl_area', 'tbl_transaction.code_area = tbl_area.code_area', 'left');
+        $this->db->join('tbl_line', 'tbl_transaction.code_line = tbl_line.code_line', 'left');
+        $query = $this->db->get();
         return $query->result();
     }
 
     public function get_filtered_data($start_date, $end_date)
     {
+        // Konversi format tanggal jika perlu
+        $start_date = date('Y-m-d', strtotime($start_date));
+        $end_date = date('Y-m-d', strtotime($end_date));
+
         // Lakukan query ke database untuk mengambil data berdasarkan rentang tanggal
         $this->db->select('*');
         $this->db->from('tbl_transaction'); // Ganti 'your_table' dengan nama tabel yang sesuai
-        $this->db->where('date >=', $start_date);
-        $this->db->where('date <=', $end_date);
+        $this->db->where('DATE(date) >=', $start_date);
+        $this->db->where('DATE(date) <=', $end_date);
+        $this->db->join('tbl_material', 'tbl_material.code_material = tbl_transaction.code_material');
+        $this->db->join('tbl_area', 'tbl_transaction.code_area = tbl_area.code_area', 'left');
+        $this->db->join('tbl_line', 'tbl_transaction.code_line = tbl_line.code_line', 'left');
         $query = $this->db->get();
 
         // Kembalikan hasil query sebagai array objek
         return $query->result();
     }
+  
 }

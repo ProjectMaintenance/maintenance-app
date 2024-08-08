@@ -1,7 +1,7 @@
 <style type="text/css">
-    input[type="text"] {
-        text-transform: uppercase;
-    }
+input[type="text"] {
+    text-transform: uppercase;
+}
 </style>
 
 <!-- Content Wrapper. Contains page content -->
@@ -36,31 +36,71 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="quantity">Quantity GR</label>
+                    <label for="quantity">Quantity Goods Receive (Barang Masuk)</label>
                     <input type="number" class="form-control" id="quantity" name="quantity" value="0" min="0">
                 </div>
                 <div class="form-group">
+                    <label for="uom">UOM</label>
+                    <input type="text" class="form-control" id="uom" name="uom" readonly>
+                </div>
+                <!-- <div class="form-group">
                     <label for="identity_pic">Identity PIC</label>
                     <input type="text" class="form-control" id="identity_pic" name="identity_pic" placeholder="Enter Identity PIC">
+                </div> -->
+                <?php
+                $identity = ['Diana', 'Mentari'];
+                ?>
+                <div class="form-group">
+                    <label for="identity_pic">Identity PIC</label>
+                    <select class="form-control select2" name="identity_pic" id="identity_pic">
+                        <option value="" selected>- Select Name PIC -</option>
+                        <?php foreach ($identity as $idnty) : ?>
+                        <option value="<?= $idnty ?>"><?= $idnty; ?></option>
+                        <?php endforeach; ?>
+                        <option value="0">Other</option>
+                    </select>
+                </div>
+                <div class="form-group" id="other_identity_pic_group" style="display: none;">
+                    <label for="other_identity_pic">Enter Other Identity PIC</label>
+                    <input type="text" class="form-control" name="other_identity_pic" id="other_identity_pic">
                 </div>
                 <div class="form-group">
-                    <label for="description">Alasan Pengambilan</label>
-                    <input type="text" class="form-control" id="description" name="description" placeholder="Enter Lasan Pengambilan">
+                    <label for="price">Price per unit (Rp)</label>
+                    <input type="text" class="form-control" id="price" name="price" placeholder="Enter Price">
                 </div>
                 <div class="form-group">
+                    <label for="description">Note</label>
+                    <input type="text" class="form-control" id="description" name="description"
+                        placeholder="Enter Note">
+                </div>
+                <div class="form-group">
+                    <?php
+                    // Set the default timezone if necessary
+                    date_default_timezone_set('Asia/Jakarta'); // Sesuaikan dengan timezone Anda
+
+                    // Format date as 'dd-mm-yyyy' for display
+                    $formattedDate = date('d/m/Y');
+
+                    // Format date as 'Y-m-d' for the hidden input
+                    $hiddenDate = date('Y/m/d');
+                    ?>
                     <label for="date_time">Date And Time</label>
-                    <input type="date" class="form-control" id="date" name="date" value="<?= date('Y-m-d') ?>" readonly>
+                    <input type="text" class="form-control" id="date_display" name="date_display"
+                        value="<?= $formattedDate; ?>" readonly>
+                    <input type="hidden" id="date" name="date" value="<?= $hiddenDate; ?>">
                     <input type="hidden" id="datetime" name="datetime">
                 </div>
                 <div class="form-group">
                     <label for="id_transaction">GR Code</label>
-                    <input type="text" class="form-control" value="<?= $id_transaction; ?>" id="id_transaction" name="id_transaction" placeholder="Goods Receive Code" readonly>
+                    <input type="text" class="form-control" value="<?= $id_transaction; ?>" id="id_transaction"
+                        name="id_transaction" placeholder="Goods Receive Code" readonly>
                 </div>
             </div>
             <!-- /.card-body -->
 
             <div class="card-footer">
-            <a type="button" class="btn btn-danger" href="<?=base_url('admin/goods_receive')?>"" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                <a type="button" class="btn btn-danger" href="<?= base_url('admin/goods_receive') ?>"" name="
+                    btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             <?= form_close(); ?>
@@ -75,145 +115,194 @@
 <!-- jquery-validation -->
 <script src="<?= base_url('assets/template/') ?>plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>plugins/jquery-validation/additional-methods.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/1.8.2/autoNumeric.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#code_material').select2({
-            theme: 'bootstrap4'
-        });
+$(document).ready(function() {
+    $('.select2').select2({
+        theme: 'bootstrap4'
+    });
 
-        $('.select2').change(function(e) {
-            e.preventDefault();
-            $(this).valid();
-            var selectedValue = $(this).val();
-            var selectedText = $(this).find('Option:selected').text();
-            // Tampilkan nilai yang dipilih di konsol
-            console.log("Material Code: " + selectedValue);
-            console.log("Part Name: " + selectedText);
-        });
+    $('.select2').change(function(e) {
+        e.preventDefault();
+        $(this).valid();
+        var selectedValue = $(this).val();
+        var selectedText = $(this).find('Option:selected').text();
+        // Tampilkan nilai yang dipilih di konsol
+        console.log("Material Code: " + selectedValue);
+        console.log("Part Name: " + selectedText);
+    });
 
-        // Fungsi untuk mendapatkan waktu saat ini dalam format yang sesuai
-        function getCurrentTime() {
-            var now = new Date();
-            var hours = ('0' + now.getHours()).slice(-2);
-            var minutes = ('0' + now.getMinutes()).slice(-2);
-            var seconds = ('0' + now.getSeconds()).slice(-2);
-            var time = hours + ':' + minutes + ':' + seconds;
-            return time;
+    // Fungsi untuk mendapatkan waktu saat ini dalam format yang sesuai
+    function getCurrentTime() {
+        var now = new Date();
+        var hours = ('0' + now.getHours()).slice(-2);
+        var minutes = ('0' + now.getMinutes()).slice(-2);
+        var seconds = ('0' + now.getSeconds()).slice(-2);
+        var time = hours + ':' + minutes + ':' + seconds;
+        return time;
+    }
+
+    // Tambahkan event listener untuk input tanggal
+    document.getElementById('date').addEventListener('change', function() {
+        // Ambil tanggal yang dipilih oleh pengguna
+        var selectedDate = this.value;
+
+        // Jika tanggal dipilih, tambahkan waktu saat ini
+        if (selectedDate) {
+            var currentTime = getCurrentTime();
+            var datetime = selectedDate + ' ' + currentTime;
+            // Setel nilai input datetime
+            document.getElementById('datetime').value = datetime;
         }
+    });
 
-        // Tambahkan event listener untuk input tanggal
-        document.getElementById('date').addEventListener('change', function() {
-            // Ambil tanggal yang dipilih oleh pengguna
-            var selectedDate = this.value;
+    $.ajax({
+        url: "<?php echo base_url('admin/material_list'); ?>",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            // Bersihkan pilihan lama jika ada
+            $('#code_material').empty();
+            // Tambahkan opsi default
+            $('#code_material').append(
+                '<option selected="selected" value="">- Select Material -</option>');
+            // Loop melalui data material dan tambahkan ke Select2
+            $.each(response.material, function(key, value) {
+                $('#code_material').append('<option value="' + value.code_material + '">' +
+                    value.code_material + ' ' +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;' +
+                    value.specification_material + ' ' +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;' +
+                    value.name_location + '</option>');
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
 
-            // Jika tanggal dipilih, tambahkan waktu saat ini
-            if (selectedDate) {
-                var currentTime = getCurrentTime();
-                var datetime = selectedDate + ' ' + currentTime;
-                // Setel nilai input datetime
-                document.getElementById('datetime').value = datetime;
-            }
-        });
+    $('#code_material').change(function(e) {
+        e.preventDefault();
+
+        var code_material = $(this).val();
 
         $.ajax({
-            url: "<?php echo base_url('admin/material_list'); ?>",
-            type: "GET",
-            dataType: "json",
+            type: "POST",
+            url: "<?= site_url('admin/get_material_by_code_material'); ?>",
+            data: {
+                code_material: code_material
+            },
+            dataType: "JSON",
             success: function(response) {
-                // Bersihkan pilihan lama jika ada
-                $('#code_material').empty();
-                // Tambahkan opsi default
-                $('#code_material').append(
-                    '<option selected="selected" value="">- Select Material -</option>');
-                // Loop melalui data material dan tambahkan ke Select2
-                $.each(response.material, function(key, value) {
-                    $('#code_material').append('<option value="' + value.code_material + '">' +
-                        value.code_material + ' ' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;' +
-                        value.specification_material + ' ' +
-                        '&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;' +
-                        value.name_location + '</option>');
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-
-
-        $.validator.setDefaults({
-            submitHandler: function(form) {
-                $.ajax({
-                    url: $(form).attr('action'),
-                    type: $(form).attr('method'),
-                    data: $(form).serialize(),
-                    dataType: 'JSON',
-                    success: function(response) {
-                        if (response.success == true) {
-                            toastr.success(response.message);
-                            setTimeout(function() {
-                                window.location.reload();
-                            }, 1500); // Penundaan selama 2000 milidetik (2 detik)
-                        } else {
-                            toastr.error(response.message);
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Tanggapan dari server jika terjadi kesalahan
-                        console.log('AJAX Error:', textStatus);
-                    },
-                });
-            }
-        });
-        $('#form-add-goods-receive').validate({
-            rules: {
-                date: {
-                    required: true,
-                },
-                code_material: {
-                    required: true,
-                },
-                quantity: {
-                    required: true,
-                    min: 1
-                },
-                identity_pic: {
-                    required: true,
-                },
-                description: {
-                    required: true,
-                },
-            },
-            messages: {
-                date: {
-                    required: "Please select date",
-                },
-                code_material: {
-                    required: "Please select a material",
-                },
-                quantity: {
-                    required: "Please enter a quantity",
-                    min: 'Please enter a quantity'
-                },
-                identity_pic: {
-                    required: "Please enter a identity PIC",
-                },
-                description: {
-                    required: "Please enter a description",
-                },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
+                $('#uom').val(response.code_uom);
             }
         });
     });
+
+
+    $.validator.setDefaults({
+        submitHandler: function(form) {
+            $.ajax({
+                url: $(form).attr('action'),
+                type: $(form).attr('method'),
+                data: $(form).serialize(),
+                dataType: 'JSON',
+                success: function(response) {
+                    if (response.success == true) {
+                        toastr.success(response.message);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1500); // Penundaan selama 2000 milidetik (2 detik)
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Tanggapan dari server jika terjadi kesalahan
+                    console.log('AJAX Error:', textStatus);
+                },
+            });
+        }
+    });
+    $('#form-add-goods-receive').validate({
+        rules: {
+            date: {
+                required: true,
+            },
+            code_material: {
+                required: true,
+            },
+            quantity: {
+                required: true,
+                min: 1
+            },
+            identity_pic: {
+                required: true,
+            },
+            description: {
+                required: false,
+            },
+        },
+        messages: {
+            date: {
+                required: "Please select date",
+            },
+            code_material: {
+                required: "Please select a material",
+            },
+            quantity: {
+                required: "Please enter a quantity",
+                min: 'Please enter a quantity'
+            },
+            identity_pic: {
+                required: "Please enter a identity PIC",
+            },
+            description: {
+                required: "Please enter a description",
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
+    $('#identity_pic').change(function(e) {
+        e.preventDefault();
+        var value = $(this).val();
+
+        if (value == "0") {
+            $('#other_identity_pic_group').show();
+            setTimeout(function() {
+                $('#other_identity_pic')
+                    .focus();
+            }, 100);
+        } else {
+            $('#other_identity_pic_group').hide();
+        }
+    });
+
+    $("#price").autoNumeric('init', {
+        aSep: '.',
+        aDec: ',',
+        aForm: true,
+        vMax: '999999999',
+        vMin: '-999999999'
+    });
+    // new AutoNumeric('#price', {
+    //     digitGroupSeparator: '.',
+    //     decimalCharacter: ',',
+    //     decimalPlaces: 2,
+    //     currencySymbol: 'Rp. ',
+    //     currencySymbolPlacement: 'p',
+    //     unformatOnSubmit: true
+    // });
+});
 </script>

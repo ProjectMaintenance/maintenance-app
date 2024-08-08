@@ -9,8 +9,7 @@
     <link rel="icon" type="image/png" href="https://isuzu-astra.com/wp-content/themes/Isuzu/images/favicon.png">
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url('assets/template/') ?>plugins/fontawesome-free/css/all.min.css">
     <!-- icheck bootstrap -->
@@ -21,22 +20,22 @@
     <link rel="stylesheet" href="<?= base_url('assets/template/') ?>plugins/toastr/toastr.min.css">
 
     <style type="text/css">
-    body {
-        position: relative;
-        background-image: url('http://localhost/maintenance-app/assets/image/background/Background-Isuzu.jpg');
-        background-size: cover;
-    }
+        body {
+            position: relative;
+            background-image: url('<?php echo base_url('assets/image/background/Background-Isuzu.jpg'); ?>');
+            background-size: cover;
+        }
 
-    body::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.5);
-        /* Opacitas putih (RGBA: merah, hijau, biru, alpha) */
-    }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.5);
+            /* Opacitas putih (RGBA: merah, hijau, biru, alpha) */
+        }
     </style>
 
 </head>
@@ -56,15 +55,12 @@
                 </p>
 
                 <?= form_open('auth/verify_login', array('id' => 'form-login')); ?>
-                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-                    value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
                 <div class="form-group">
-                    <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username"
-                        value="<?= set_value('username') ?>">
+                    <input type="text" name="username" class="form-control" id="username" placeholder="Enter Username" value="<?= set_value('username') ?>">
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" class="form-control" id="password"
-                        placeholder="Enter Password">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -94,96 +90,96 @@
     <script src="<?= base_url('assets/template/') ?>plugins/toastr/toastr.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-        $('#username').focus();
+        $(document).ready(function() {
+            $('#username').focus();
 
-        $.validator.setDefaults({
-            submitHandler: function(form) {
-                $.ajax({
-                    url: $(form).attr('action'),
-                    type: $(form).attr('method'),
-                    data: $(form).serialize(),
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        // Menampilkan loading sebelum pengiriman AJAX dimulai
-                        $('.loader').show();
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            if (response.id_role == 1) {
-                                toastr.success(response.message);
-                                setTimeout(function() {
-                                    window.location.href =
-                                        '<?= site_url('administrator/dashboard'); ?>';
-                                }, 2000); // Penundaan selama 3000 milidetik (3 detik)
-                            } else if (response.id_role == 2) {
-                                toastr.success(response.message);
-                                setTimeout(function() {
-                                    window.location.href =
-                                        '<?= site_url('admin/dashboard'); ?>';
-                                }, 2000); // Penundaan selama 3000 milidetik (3 detik)
-                            } else if (response.id_role == 3) {
-                                toastr.success(response.message);
-                                setTimeout(function() {
-                                    window.location.href =
-                                        '<?= site_url('users/dashboard'); ?>';
-                                }, 2000); // Penundaan selama 3000 milidetik (3 detik)
+            $.validator.setDefaults({
+                submitHandler: function(form) {
+                    $.ajax({
+                        url: $(form).attr('action'),
+                        type: $(form).attr('method'),
+                        data: $(form).serialize(),
+                        dataType: 'JSON',
+                        beforeSend: function() {
+                            // Menampilkan loading sebelum pengiriman AJAX dimulai
+                            $('.loader').show();
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                if (response.id_role == 1) {
+                                    toastr.success(response.message);
+                                    setTimeout(function() {
+                                        window.location.href =
+                                            '<?= site_url('administrator/dashboard'); ?>';
+                                    }, 2000); // Penundaan selama 3000 milidetik (3 detik)
+                                } else if (response.id_role == 2) {
+                                    toastr.success(response.message);
+                                    setTimeout(function() {
+                                        window.location.href =
+                                            '<?= site_url('admin/dashboard'); ?>';
+                                    }, 2000); // Penundaan selama 3000 milidetik (3 detik)
+                                } else if (response.id_role == 3) {
+                                    toastr.success(response.message);
+                                    setTimeout(function() {
+                                        window.location.href =
+                                            '<?= site_url('users/dashboard'); ?>';
+                                    }, 2000); // Penundaan selama 3000 milidetik (3 detik)
+                                }
+                            } else {
+                                toastr.error(response.message);
                             }
-                        } else {
-                            toastr.error(response.message);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // Tanggapan dari server jika terjadi kesalahan
+                            console.log('AJAX Error:', textStatus);
+                            console.log('Error Thrown:', errorThrown);
+                            console.log('Server Response:', jqXHR
+                                .responseText
+                            ); // Menampilkan respons kesalahan untuk debugging
+                            toastr.error('AJAX Error: ' +
+                                textStatus); // Menampilkan pesan kesalahan kepada pengguna
+                        },
+                        complete: function() {
+                            // Menyembunyikan loading setelah AJAX request selesai
+                            $('.loader').hide();
                         }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        // Tanggapan dari server jika terjadi kesalahan
-                        console.log('AJAX Error:', textStatus);
-                        console.log('Error Thrown:', errorThrown);
-                        console.log('Server Response:', jqXHR
-                            .responseText
-                        ); // Menampilkan respons kesalahan untuk debugging
-                        toastr.error('AJAX Error: ' +
-                            textStatus); // Menampilkan pesan kesalahan kepada pengguna
-                    },
-                    complete: function() {
-                        // Menyembunyikan loading setelah AJAX request selesai
-                        $('.loader').hide();
-                    }
-                });
+                    });
 
 
-            }
+                }
+            });
+            $('#form-login').validate({
+                rules: {
+                    username: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 8
+                    },
+                },
+                messages: {
+                    username: {
+                        required: "Please enter a username",
+                    },
+                    password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 8 characters long"
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
         });
-        $('#form-login').validate({
-            rules: {
-                username: {
-                    required: true,
-                },
-                password: {
-                    required: true,
-                    minlength: 8
-                },
-            },
-            messages: {
-                username: {
-                    required: "Please enter a username",
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 8 characters long"
-                },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
     </script>
 </body>
 

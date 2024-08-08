@@ -12,7 +12,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -41,8 +41,8 @@ input[type="text"] {
                 <table id="tbl_uom" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>CODE UOM</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">CODE UOM</th>
                             <th>NAME UOM</th>
                             <th>ACTION</th>
                         </tr>
@@ -52,8 +52,8 @@ input[type="text"] {
                         $no = 1;
                         foreach ($uom as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $value->code_uom ?></td>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td class="text-center"><?= $value->code_uom ?></td>
                             <td><?= $value->name_uom ?></td>
                             <td class="text-center">
                                 <!-- Button trigger modal -->
@@ -130,7 +130,7 @@ $(document).ready(function() {
             //     selected: true,
             //     style: 'multi'
             // },
-           
+
         }).buttons().container().appendTo('#tbl_uom_wrapper .col-md-6:eq(0)');
     });
 

@@ -1,7 +1,7 @@
 <style type="text/css">
-    input[type="text"] {
-        text-transform: uppercase;
-    }
+input[type="text"] {
+    text-transform: uppercase;
+}
 </style>
 
 <!-- Content Wrapper. Contains page content -->
@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -25,7 +25,8 @@
         <div class="card">
             <div class="card-header">
                 <h2 class="card-title">
-                    <a href="<?= site_url('users/add_area') ?>" class="btn btn-primary"><i class="fas fa-plus mr-2"></i>Add Data</a>
+                    <a href="<?= site_url('users/add_area') ?>" class="btn btn-primary"><i
+                            class="fas fa-plus mr-2"></i>Add Data</a>
                 </h2>
 
                 <div class="card-tools">
@@ -41,8 +42,8 @@
                 <table id="tbl_area" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>CODE AREA</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">CODE AREA</th>
                             <th>NAME AREA</th>
                         </tr>
                     </thead>
@@ -50,11 +51,11 @@
                         <?php
                         $no = 1;
                         foreach ($area as $value) : ?>
-                            <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= $value->code_area; ?></td>
-                                <td><?= $value->name_area; ?></td>
-                            </tr>
+                        <tr>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td class="text-center"><?= $value->code_area; ?></td>
+                            <td><?= $value->name_area; ?></td>
+                        </tr>
                         <?php endforeach ?>
                     </tbody>
                 </table>
@@ -72,19 +73,27 @@
 <script src="<?= base_url('assets/template/') ?>plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>plugins/jquery-validation/additional-methods.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $(function() {
-            $("#tbl_area").DataTable({
-                "scrollX": true,
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
-                // select: {
-                //     selected: true,
-                //     style: 'multi'
-                // },
-                 
-            }).buttons().container().appendTo('#tbl_area_wrapper .col-md-6:eq(0)');
-        });
+$(document).ready(function() {
+    $(function() {
+        $("#tbl_area").DataTable({
+            "scrollX": true,
+            "responsive": false,
+            "lengthChange": true,
+            "autoWidth": false,
+            "bStateSave": true,
+            "scrollY": 400,
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            },
+            // select: {
+            //     selected: true,
+            //     style: 'multi'
+            // },
+
+        }).buttons().container().appendTo('#tbl_area_wrapper .col-md-6:eq(0)');
     });
+});
 </script>

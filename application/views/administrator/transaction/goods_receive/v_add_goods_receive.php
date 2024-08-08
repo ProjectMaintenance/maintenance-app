@@ -13,7 +13,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><b><?= $title_page; ?></b></h1>
                 </div>
-               
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -37,33 +37,71 @@ input[type="text"] {
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="quantity">Quantity GR</label>
+                    <label for="quantity">Quantity Goods Receive (Barang Masuk)</label>
                     <input type="number" class="form-control" id="quantity" name="quantity" value="0" min="0">
                 </div>
                 <div class="form-group">
+                    <label for="uom">UOM</label>
+                    <input type="text" class="form-control" id="uom" name="uom" readonly>
+                </div>
+                <!-- <div class="form-group">
                     <label for="identity_pic">Identity PIC</label>
-                    <input type="text" class="form-control" id="identity_pic" name="identity_pic"
-                        placeholder="Enter Identity PIC">
+                    <input type="text" class="form-control" id="identity_pic" name="identity_pic" placeholder="Enter Identity PIC">
+                </div> -->
+                <?php
+                $identity = ['Diana', 'Mentari'];
+                ?>
+                <div class="form-group">
+                    <label for="identity_pic">Identity PIC</label>
+                    <select class="form-control select2" name="identity_pic" id="identity_pic">
+                        <option value="" selected>- Select Name PIC -</option>
+                        <?php foreach ($identity as $idnty) : ?>
+                        <option value="<?= $idnty ?>"><?= $idnty; ?></option>
+                        <?php endforeach; ?>
+                        <option value="0">Other</option>
+                    </select>
+                </div>
+                <div class="form-group" id="other_identity_pic_group" style="display: none;">
+                    <label for="other_identity_pic">Enter Other Identity PIC</label>
+                    <input type="text" class="form-control" name="other_identity_pic" id="other_identity_pic">
                 </div>
                 <div class="form-group">
-                    <label for="description">Alasan Pengambilan</label>
+                    <label for="price">Price per unit (Rp)</label>
+                    <input type="text" class="form-control" id="price" name="price" placeholder="Enter Price">
+                </div>
+                <div class="form-group">
+                    <label for="description">Note</label>
                     <input type="text" class="form-control" id="description" name="description"
-                        placeholder="Enter Lasan Pengambilan">
+                        placeholder="Enter Note">
                 </div>
                 <div class="form-group">
-                    <label for="date_time">Date And Time</label>
-                    <input type="date" class="form-control" id="date" name="date" value="<?= date('Y-m-d') ?>" readonly>
+                    <?php
+                    // Set the default timezone if necessary
+                    date_default_timezone_set('Asia/Jakarta'); // Sesuaikan dengan timezone Anda
+
+                    // Format date as 'dd-mm-yyyy' for display
+                    $formattedDate = date('d/m/Y');
+
+                    // Format date as 'Y-m-d' for the hidden input
+                    $hiddenDate = date('Y/m/d');
+                    ?>
+                    <!-- <label for="date_time">Date And Time</label> -->
+                    <input type="hidden" class="form-control" id="date_display" name="date_display"
+                        value="<?= $formattedDate; ?>" readonly>
+                    <input type="hidden" id="date" name="date" value="<?= $hiddenDate; ?>">
                     <input type="hidden" id="datetime" name="datetime">
                 </div>
                 <div class="form-group">
                     <label for="id_transaction">GR Code</label>
-                    <input type="text" class="form-control" value="<?= $id_transaction; ?>" id="id_transaction" name="id_transaction" placeholder="Goods Receive Code" readonly>
+                    <input type="text" class="form-control" value="<?= $id_transaction; ?>" id="id_transaction"
+                        name="id_transaction" placeholder="Goods Receive Code" readonly>
                 </div>
             </div>
             <!-- /.card-body -->
 
             <div class="card-footer">
-            <a type="button" class="btn btn-danger" href="<?=base_url('administrator/goods_receive')?>"" name="btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+                <a type="button" class="btn btn-danger" href="<?= base_url('administrator/goods_receive') ?>"" name="
+                    btn_kembali"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
             <?= form_close(); ?>
@@ -78,10 +116,10 @@ input[type="text"] {
 <!-- jquery-validation -->
 <script src="<?= base_url('assets/template/') ?>plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?= base_url('assets/template/') ?>plugins/jquery-validation/additional-methods.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/1.8.2/autoNumeric.js"></script>
 <script>
 $(document).ready(function() {
-    $('#code_material').select2({
+    $('.select2').select2({
         theme: 'bootstrap4'
     });
 
@@ -144,6 +182,24 @@ $(document).ready(function() {
         }
     });
 
+    $('#code_material').change(function(e) {
+        e.preventDefault();
+
+        var code_material = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?= site_url('administrator/get_material_by_code_material'); ?>",
+            data: {
+                code_material: code_material
+            },
+            dataType: "JSON",
+            success: function(response) {
+                $('#uom').val(response.code_uom);
+            }
+        });
+    });
+
 
     $.validator.setDefaults({
         submitHandler: function(form) {
@@ -184,8 +240,11 @@ $(document).ready(function() {
             identity_pic: {
                 required: true,
             },
-            description: {
+            other_identity_pic: {
                 required: true,
+            },
+            description: {
+                required: false,
             },
         },
         messages: {
@@ -218,5 +277,37 @@ $(document).ready(function() {
             $(element).removeClass('is-invalid');
         }
     });
+
+    $('#identity_pic').change(function(e) {
+        e.preventDefault();
+        var value = $(this).val();
+
+        if (value == "0") {
+            $('#other_identity_pic_group').show();
+            setTimeout(function() {
+                $('#other_identity_pic')
+                    .focus();
+            }, 100);
+        } else {
+            $('#other_identity_pic_group').hide();
+        }
+    });
+
+    $("#price").autoNumeric('init', {
+        aSep: '.',
+        aDec: ',',
+        aForm: true,
+        vMax: '999999999',
+        vMin: '-999999999'
+    });
+
+    // new AutoNumeric('#price', {
+    //     digitGroupSeparator: '.',
+    //     decimalCharacter: ',',
+    //     decimalPlaces: 2,
+    //     currencySymbol: ' ',
+    //     currencySymbolPlacement: 'p',
+    //     unformatOnSubmit: true
+    // });
 });
 </script>

@@ -86,6 +86,21 @@ class Location extends CI_Model
             ];
         }
     }
+    public function delete_location_batch($code_location)
+    {
+        $this->db->where_in('code_location', $code_location);
+        if ($this->db->delete('tbl_location')) { // Replace 'material_table' with your actual table name
+            return [
+                'success' => true,
+                'message' => count($code_location) . ' records deleted successfully'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Failed to delete records'
+            ];
+        }
+    }
 
     public function upload_excel($data)
     {

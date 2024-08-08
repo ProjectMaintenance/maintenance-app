@@ -9,7 +9,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-                
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -22,12 +22,11 @@
             <div class="card-header">
                 <h2 class="card-title">
                     <a href="<?= site_url('admin/add_material_list') ?>" class="btn btn-primary"><i
-                            class="fas fa-plus mr-2"></i>Add Data</a>
+                            class="fas fa-plus mr-2"></i>Add Material List</a>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success" data-toggle="modal"
-                        data-target="#upload_excel_material">
+                    <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#upload_excel_material">
                         <i class="fas fa-upload mr-2"></i>Upload Excel
-                    </button>
+                    </button> -->
 
                     <!-- Modal -->
                     <div class="modal fade" id="upload_excel_material" data-backdrop="static" data-keyboard="false"
@@ -86,14 +85,18 @@
                 <table id="tbl_material_list" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>MATERIAL CODE</th>
-                            <th>BARCODE</th>
-                            <th>CATEGORY</th>
-                            <th>SPESIFICATION</th>
-                            <th>QTY STOCK</th>
-                            <th>UOM</th>
-                            <th>LOCATION</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">MATERIAL CODE</th>
+                            <th class="text-center">BARCODE</th>
+                            <th class="text-center">CATEGORY</th>
+                            <th>DESCRIPTION</th>
+                            <th class="text-center">QTY STOCK</th>
+                            <th class="text-center">UOM</th>
+                            <th class="text-center">STORAGE LOCATION</th>
+                            <th class="text-center">MINIMUM STOCK</th>
+                            <th class="text-center">MAXIMUM STOCK</th>
+                            <th class="text-center">SAFETY STOCK</th>
+                            <th class="text-center">ROP(REORDER POINT)</th>
                             <th class="text-center">ACTION</th>
                         </tr>
                     </thead>
@@ -102,16 +105,30 @@
                         $no = 1;
                         foreach ($material as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $value->code_material ?></td>
-                            <td><?php $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
-                                    echo '<img src="data:image/png;base64,' . base64_encode($generator->getBarcode($value->code_material, $generator::TYPE_CODE_128)) . '">'; ?>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td class="text-center"><?= $value->code_material ?></td>
+                            <td class="text-center">
+                                <?php $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+                                                        echo '<img src="data:image/png;base64,' . base64_encode($generator->getBarcode($value->code_material, $generator::TYPE_CODE_128)) . '">'; ?>
                             </td>
-                            <td><?= $value->name_category ?></td>
+                            <td class="text-center"><?= $value->name_category ?></td>
                             <td><?= $value->specification_material ?></td>
-                            <td><?= $value->qty_stock ?></td>
-                            <td><?= $value->code_uom ?></td>
-                            <td><?= $value->name_location ?></td>
+                            <td class="text-center"
+                                style="<?= ($value->qty_stock <= $value->minimum_stock) ? 'background-color: red;' : '' ?>">
+                                <?= $value->qty_stock ?>
+                            </td>
+                            <td class="text-center"
+                                style="<?= ($value->qty_stock <= $value->minimum_stock) ? 'background-color: red;' : '' ?>">
+                                <?= $value->code_uom ?>
+                            </td>
+                            <td class="text-center"
+                                style="<?= ($value->qty_stock <= $value->minimum_stock) ? 'background-color: red;' : '' ?>">
+                                <?= $value->name_location ?>
+                            </td>
+                            <td class="text-center"><?= $value->minimum_stock ?></td>
+                            <td class="text-center"><?= $value->maximal_stock ?></td>
+                            <td class="text-center"><?= $value->safety_stock ?></td>
+                            <td class="text-center"><?= $value->rop ?></td>
                             <td class="text-center">
                                 <a href="<?= site_url('admin/update_material_list/' . $value->id_material); ?>"
                                     class="btn btn-info"><i class="fas fa-edit mr-2"></i>Edit</a>
@@ -148,32 +165,24 @@ $(document).ready(function() {
             "responsive": false,
             "lengthChange": true,
             "autoWidth": false,
+            "bAutoWidth": false,
+            "bStateSave": true,
+            paging: true,
+            scrollCollapse: true,
+            scrollY: '86vh',
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            },
             select: {
                 selected: true,
                 style: 'multi'
             },
             "buttons": [{
-                    extend: "excel",
-                    text: '<i class="fas fa-file-excel mr-2"></i> EXCEL',
-                    className: 'btn-success',
-                    title: '',
-                    exportOptions: {
-                        stripHtml: false,
-                        columns: [0, 1, 2, 3, 4, 5, 6,
-                        7], // Indeks kolom yang ingin dicetak
-                    },
-                    customizeData: function(excelData) {
-                        // Menambahkan bintang di depan dan di belakang setiap nilai di kolom Barcode
-                        for (var i = 0; i < excelData.body.length; i++) {
-                            // Kolom Barcode berada pada indeks 2 (diasumsikan indeks kolom Barcode adalah 2)
-                            // Kolom "MATERIAL CODE" berada pada indeks 1 (diasumsikan indeks kolom "MATERIAL CODE" adalah 1)
-                            excelData.body[i][2] = '*' + excelData.body[i][1] +
-                                '*'; // Menambahkan bintang di depan dan di belakang
-                        }
-                    }
-                },
-                {
-                    text: '<i class="fas fa-print mr-2"></i> PRINT',
+                    text: '<i class="fas fa-print mr-2"></i> Print Label',
                     className: 'btn-info',
                     action: function(e, dt, node, config) {
                         $('.swalDefaultWarning').click(function() {
@@ -220,7 +229,7 @@ $(document).ready(function() {
                                 } else {
                                     console.log(response
                                         .message
-                                        ); // Pesan kesalahan jika ada
+                                    ); // Pesan kesalahan jika ada
                                 }
                             },
                             error: function(xhr, status, error) {
@@ -229,6 +238,28 @@ $(document).ready(function() {
                                 ); // Tangani kesalahan jika terjadi
                             }
                         });
+                    }
+                },
+
+                {
+                    extend: "excel",
+                    text: '<i class="fas fa-file-excel mr-2"></i> Excel',
+                    className: 'btn-success',
+                    title: '',
+                    exportOptions: {
+                        stripHtml: false,
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+                            12
+                        ], // Indeks kolom yang ingin dicetak
+                    },
+                    customizeData: function(excelData) {
+                        // Menambahkan bintang di depan dan di belakang setiap nilai di kolom Barcode
+                        for (var i = 0; i < excelData.body.length; i++) {
+                            // Kolom Barcode berada pada indeks 2 (diasumsikan indeks kolom Barcode adalah 2)
+                            // Kolom "MATERIAL CODE" berada pada indeks 1 (diasumsikan indeks kolom "MATERIAL CODE" adalah 1)
+                            excelData.body[i][2] = '*' + excelData.body[i][1] +
+                                '*'; // Menambahkan bintang di depan dan di belakang
+                        }
                     }
                 },
                 {
@@ -279,7 +310,7 @@ $(document).ready(function() {
                                 } else {
                                     console.log(response
                                         .message
-                                        ); // Pesan kesalahan jika ada
+                                    ); // Pesan kesalahan jika ada
                                 }
                             },
                             error: function(xhr, status, error) {
@@ -290,9 +321,77 @@ $(document).ready(function() {
                         });
                     }
                 },
+                //     {
+                //     text: '<i class="fas fa-trash mr-2"></i> Delete All',
+                //     className: 'btn-danger',
+                //     action: function(e, dt, node, config) {
+                //         // Mengambil data terpilih dari tabel
+                //         var selectedRows = dt.rows({
+                //             selected: true
+                //         }).data();
+
+                //         // Mengumpulkan semua nilai material_code dari setiap baris yang dipilih
+                //         var selectedMaterialCodes = [];
+
+                //         selectedRows.each(function(row) {
+                //             selectedMaterialCodes.push(row[1]);
+                //         });
+
+                //         if (selectedMaterialCodes.length === 0) {
+                //             toastr.info('Tidak Ada Data Yang Dipilih');
+                //             return;
+                //         }
+
+                //         Swal.fire({
+                //             title: "Are you sure?",
+                //             text: "You want to delete selected data!",
+                //             icon: "warning",
+                //             showCancelButton: true,
+                //             confirmButtonColor: "#3085d6",
+                //             cancelButtonColor: "#d33",
+                //             confirmButtonText: "Yes, delete it!"
+                //         }).then((result) => {
+                //             if (result.isConfirmed) {
+                //                 $.ajax({
+                //                     type: "POST",
+                //                     url: "<?= site_url('admin/delete_material_batch') ?>",
+                //                     data: {
+                //                         material_codes: selectedMaterialCodes
+                //                     },
+                //                     dataType: "json",
+                //                     success: function(response) {
+                //                         if (response.success) {
+                //                             Swal.fire({
+                //                                 title: "Deleted!",
+                //                                 text: response.message,
+                //                                 icon: "success"
+                //                             }).then(() => {
+                //                                 window.location.reload();
+                //                             });
+                //                         } else {
+                //                             Swal.fire({
+                //                                 title: "Failed!",
+                //                                 text: response.message,
+                //                                 icon: "error"
+                //                             });
+                //                         }
+                //                     },
+                //                     error: function(xhr, status, error) {
+                //                         Swal.fire({
+                //                             title: "Error!",
+                //                             text: "An error occurred while processing your request.",
+                //                             icon: "error"
+                //                         });
+                //                         console.error(xhr.responseText);
+                //                     }
+                //                 });
+                //             }
+                //         });
+                //     }
+                // },
                 {
                     extend: 'selectAll',
-                    text: '<i class="fas fa-tasks mr-2"></i> Select All Print',
+                    text: '<i class="fas fa-tasks mr-2"></i> Select All',
                     className: 'btn'
                 },
                 {

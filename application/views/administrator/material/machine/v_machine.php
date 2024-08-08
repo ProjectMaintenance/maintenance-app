@@ -13,7 +13,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-               
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -90,10 +90,10 @@ input[type="text"] {
                 <table id="tbl_machine" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
+                            <th class="text-center">NO</th>
                             <th>NAME AREA</th>
-                            <th>NAME LINE</th>
-                            <th>CODE MACHINE</th>
+                            <th class="text-center">NAME LINE</th>
+                            <th class="text-center">CODE MACHINE</th>
                             <th>NAME MACHINE</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -103,10 +103,10 @@ input[type="text"] {
                         $no = 1;
                         foreach ($machine as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
+                            <td class="text-center"><?= $no++ ?></td>
                             <td><?= $value->name_area ?></td>
-                            <td><?= $value->name_line ?></td>
-                            <td><?= $value->code_machine ?></td>
+                            <td class="text-center"><?= $value->name_line ?></td>
+                            <td class="text-center"><?= $value->code_machine ?></td>
                             <td><?= $value->name_machine ?></td>
                             <td class="text-center">
                                 <a href="<?= site_url('administrator/update_machine/' . $value->id_machine); ?>"
@@ -119,16 +119,6 @@ input[type="text"] {
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>NO</th>
-                            <th>NAME AREA</th>
-                            <th>NAME LINE</th>
-                            <th>CODE MACHINE</th>
-                            <th>NAME MACHINE</th>
-                            <th class="text-center">ACTION</th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <!-- /.card-body -->
@@ -152,9 +142,17 @@ input[type="text"] {
 $(document).ready(function() {
     $("#tbl_machine").DataTable({
         "scrollX": true,
-        "responsive": true,
+        "responsive": false,
         "lengthChange": true,
         "autoWidth": false,
+        "bStateSave": true,
+        "scrollY": 400,
+        "fnStateSave": function(oSettings, oData) {
+            localStorage.setItem('offersDataTables', JSON.stringify(oData));
+        },
+        "fnStateLoad": function(oSettings) {
+            return JSON.parse(localStorage.getItem('offersDataTables'));
+        },
         // select: {
         //     selected: true,
         //     style: 'multi'

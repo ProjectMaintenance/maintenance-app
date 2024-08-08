@@ -15,6 +15,7 @@ class Administrator extends CI_Model
         $this->load->model('Transaction');
         $this->load->model('Uom');
         $this->load->model('Users');
+        $this->load->model('Req_order');
     }
 
 
@@ -137,6 +138,22 @@ class Administrator extends CI_Model
         return $this->Location->delete_location($id_location);
     }
 
+    public function delete_location_batch($location_codes)
+    {
+        $this->db->where_in('code_location', $location_codes);
+        if ($this->db->delete('tbl_location')) { // Ganti 'location_table' dengan nama tabel Anda
+            return [
+                'success' => true,
+                'message' => count($location_codes) . ' records deleted successfully'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Failed to delete records'
+            ];
+        }
+    }
+
     public function check_code_location_upload($code_location)
     {
         return $this->Location->check_code_location_upload($code_location);
@@ -212,6 +229,12 @@ class Administrator extends CI_Model
         return $this->Material->count_material_list();
     }
 
+    public function get_material_by_code_material()
+    {
+        $code_material = $this->input->post('code_material');
+        return $this->Material->get_material_by_code_material($code_material);
+    }
+
     public function get_all_material()
     {
         return $this->Material->get_all_material();
@@ -233,11 +256,16 @@ class Administrator extends CI_Model
         return $this->Material->save_update_material($id_material);
     }
 
-    public function delete_material()
+    public function delete_material($code_material)
     {
-        $code_material  = $this->input->post('code_material');
         return $this->Material->delete_material($code_material);
     }
+
+    public function delete_material_batch($material_codes)
+    {
+        return $this->Material->delete_material_batch($material_codes);
+    }
+
 
     public function get_data_material_by_id($id_material)
     {
@@ -325,10 +353,241 @@ class Administrator extends CI_Model
         return $this->Transaction->get_transaction_detail();
     }
 
+    public function delete_history_batch($transaction_type)
+    {
+        $this->db->where_in('transaction_type', $transaction_type);
+        if ($this->db->delete('tbl_transaction')) {
+            return [
+                'success' => true,
+                'message' => count($transaction_type) . ' records deleted successfully'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Failed to delete records'
+            ];
+        }
+    }
+
+
+
     public function get_filtered_data($start_date, $end_date)
     {
         return $this->Transaction->get_filtered_data($start_date, $end_date);
     }
+
+    public function get_count_transaction()
+    {
+        return $this->Transaction->count_transaction();
+    }
+
+
+    //------------------------------------- Request Order
+    public function get_count_req_order()
+    {
+        return $this->Req_order->get_count_req_order();
+    }
+
+    public function get_count_status_ppbj_on_progress()
+    {
+        return $this->Req_order->get_count_status_ppbj_on_progress();
+    }
+
+    public function get_count_status_ppbj_delay()
+    {
+        return $this->Req_order->get_count_status_ppbj_delay();
+    }
+
+    public function get_count_status_ppbj_done()
+    {
+        return $this->Req_order->get_count_status_ppbj_done();
+    }
+
+    public function get_count_status_ppbj_cancel()
+    {
+        return $this->Req_order->get_count_status_ppbj_cancel();
+    }
+
+    public function get_count_status_sr_on_progress()
+    {
+        return $this->Req_order->get_count_status_sr_on_progress();
+    }
+
+    public function get_count_status_sr_delay()
+    {
+        return $this->Req_order->get_count_status_sr_delay();
+    }
+
+    public function get_count_status_sr_done()
+    {
+        return $this->Req_order->get_count_status_sr_done();
+    }
+
+    public function get_count_status_sr_cancel()
+    {
+        return $this->Req_order->get_count_status_sr_cancel();
+    }
+
+    public function get_count_status_pr_on_progress()
+    {
+        return $this->Req_order->get_count_status_pr_on_progress();
+    }
+
+    public function get_count_status_pr_delay()
+    {
+        return $this->Req_order->get_count_status_pr_delay();
+    }
+
+    public function get_count_status_pr_done()
+    {
+        return $this->Req_order->get_count_status_pr_done();
+    }
+
+    public function get_count_status_pr_cancel()
+    {
+        return $this->Req_order->get_count_status_pr_cancel();
+    }
+
+    public function get_count_status_po_on_progress()
+    {
+        return $this->Req_order->get_count_status_po_on_progress();
+    }
+
+    public function get_count_status_po_delay()
+    {
+        return $this->Req_order->get_count_status_po_delay();
+    }
+
+    public function get_count_status_po_done()
+    {
+        return $this->Req_order->get_count_status_po_done();
+    }
+
+    public function get_count_status_po_cancel()
+    {
+        return $this->Req_order->get_count_status_po_cancel();
+    }
+
+    public function get_count_jugdment_on_progress()
+    {
+        return $this->Req_order->get_count_jugdment_on_progress();
+    }
+
+    public function get_count_jugdment_delay()
+    {
+        return $this->Req_order->get_count_jugdment_delay();
+    }
+
+    public function get_count_jugdment_received()
+    {
+        return $this->Req_order->get_count_jugdment_received();
+    }
+
+    public function get_count_jugdment_cancel()
+    {
+        return $this->Req_order->get_count_jugdment_cancel();
+    }
+
+    public function get_count_jugdment_process_delivery_material()
+    {
+        return $this->Req_order->get_count_jugdment_process_delivery_material();
+    }
+
+    public function get_data_by_req_order($register_no)
+    {
+        return $this->Req_order->get_data_by_req_order($register_no);
+    }
+
+    public function get_all_req_order()
+    {
+        return $this->Req_order->get_all_req_order();
+    }
+
+    public function get_print_req_order_by_regist_no($regist_no)
+    {
+        return $this->Req_order->get_req_order_by_regist_no_print($regist_no);
+    }
+
+    public function print_req_order_by_regist_no($regist_no)
+    {
+        return $this->Req_order->get_print_req_order_by_regist_no($regist_no);
+    }
+
+    public function get_req_order_by_regist_no($regist_no)
+    {
+        return $this->Req_order->get_req_order_by_regist_no($regist_no);
+    }
+
+    public function get_data_req_order_by_id($id_req_order)
+    {
+        return $this->Req_order->get_data_req_order_by_id($id_req_order);
+    }
+
+    public function get_data_req_order_by_regist_no($regist_no)
+    {
+        return $this->Req_order->get_data_req_order_by_regist_no($regist_no);
+    }
+
+    public function get_list_select_material_req_order_by_regist_no($regist_no)
+    {
+        return $this->Req_order->get_list_select_material_req_order_by_regist_no($regist_no);
+    }
+
+    public function create_no_ppbj($department_code)
+    {
+        return $this->Req_order->create_no_ppbj($department_code);
+    }
+
+    public function check_register_no($register_no, $original_register_no, $regist_no)
+    {
+        return $this->Req_order->check_register_no($register_no, $original_register_no, $regist_no);
+    }
+
+    public function save_req_order()
+    {
+        return $this->Req_order->save_req_order();
+    }
+
+    public function save_update_req_order()
+    {
+        $id_req_order = $this->input->post('id_req_order');
+        return $this->Req_order->save_update_req_order($id_req_order);
+    }
+    //------------------------------------------- PPBJ
+    public function update_ppbj($regist_no)
+    {
+        return $this->Req_order->update_ppbj($regist_no);
+    }
+
+    //------------------------------------------- SR
+    public function update_sr($id_req_order)
+    {
+        return $this->Req_order->update_sr($id_req_order);
+    }
+
+    //------------------------------------------- PR
+    public function update_pr($id_req_order)
+    {
+        return $this->Req_order->update_pr($id_req_order);
+    }
+
+    //------------------------------------------- PO
+    public function update_po($id_req_order)
+    {
+        return $this->Req_order->update_po($id_req_order);
+    }
+
+    //------------------------------------------- Jugdment
+    public function update_jugdment($id_req_order)
+    {
+        return $this->Req_order->update_jugdment($id_req_order);
+    }
+
+    public function delete_req_order($regist_no)
+    {
+        return $this->Req_order->delete_req_order($regist_no);
+    }
+
 
     //------------------------------------- Uom -------------------------------------\\
     public function get_all_uom()

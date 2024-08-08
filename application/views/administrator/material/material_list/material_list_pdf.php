@@ -32,6 +32,7 @@
                 <th>Qty</th>
                 <th>Uom</th>
                 <th>Location</th>
+                
             </tr>
         </thead>
         <tbody>

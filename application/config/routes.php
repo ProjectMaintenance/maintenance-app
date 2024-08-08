@@ -73,9 +73,14 @@ $route['administrator/save_update_material']        = $administrator . 'save_upd
 $route['administrator/delete_material']             = $administrator . 'delete_material';
 $route['administrator/update_material_list/(:any)'] = $administrator . 'update_material/$1';
 $route['administrator/upload_material']             = $administrator . 'upload_excel_material';
-$route['administrator/posttopdf']                   = $administrator . 'post_to_pdf';
-$route['administrator/print_label_pdf']             = $administrator . 'print_label_pdf';
+// $route['administrator/posttopdf']                   = $administrator . 'post_to_pdf';
+$route['administrator/posttoprintlabel']                   = $administrator . 'post_to_print_label';
+// $route['administrator/print_label_pdf']             = $administrator . 'print_label_pdf';
+$route['administrator/print_label']                 = $administrator . 'print_label';
 $route['administrator/material_list_pdf']           = $administrator . 'material_list_pdf';
+$route['administrator/delete_material_select_all']       = $administrator . 'delete_material_select_all';
+$route['administrator/get_material_by_code_material'] = $administrator . 'get_material_by_code_material';
+
 
 $route['administrator/category']                    = $administrator . 'category';
 $route['administrator/add_category']                = $administrator . 'add_category';
@@ -86,6 +91,7 @@ $route['administrator/delete_category']             = $administrator . 'delete_c
 $route['administrator/upload_category']             = $administrator . 'upload_category';
 
 $route['administrator/area']                        = $administrator . 'area';
+$route['administrator/get_area']                    = $administrator . 'get_area';
 $route['administrator/add_area']                    = $administrator . 'add_area';
 $route['administrator/check_code_area']             = $administrator . 'check_code_area';
 $route['administrator/save_area']                   = $administrator . 'save_area';
@@ -93,6 +99,7 @@ $route['administrator/update_area']                 = $administrator . 'update_a
 $route['administrator/delete_area']                 = $administrator . 'delete_area';
 
 $route['administrator/line']                        = $administrator . 'line';
+$route['administrator/get_line_by_area']            = $administrator . 'get_line_by_area';
 $route['administrator/add_line']                    = $administrator . 'add_line';
 $route['administrator/check_code_line']             = $administrator . 'check_code_line';
 $route['administrator/save_line']                   = $administrator . 'save_line';
@@ -100,6 +107,7 @@ $route['administrator/update_line']                 = $administrator . 'update_l
 $route['administrator/delete_line']                 = $administrator . 'delete_line';
 
 $route['administrator/machine']                     = $administrator . 'machine';
+$route['administrator/get_machine_by_line']         = $administrator . 'get_machine_by_line';
 $route['administrator/add_machine']                 = $administrator . 'add_machine';
 $route['administrator/check_code_machine']          = $administrator . 'check_code_machine';
 $route['administrator/save_machine']                = $administrator . 'save_machine';
@@ -122,6 +130,8 @@ $route['administrator/save_location']               = $administrator . 'save_loc
 $route['administrator/update_location']             = $administrator . 'update_location';
 $route['administrator/delete_location']             = $administrator . 'delete_location';
 $route['administrator/upload_location']             = $administrator . 'upload_excel_location';
+$route['administrator/delete_location_batch']       = $administrator . 'delete_location_batch';
+
 
 $route['administrator/detail_material_list']        = $administrator . 'detail_material_list';
 
@@ -136,6 +146,30 @@ $route['administrator/update_goods_issue']          = $administrator . 'update_g
 $route['administrator/save_good_issue']             = $administrator . 'save_goods_issue';
 $route['administrator/history_transaction']         = $administrator . 'history_transaction';
 $route['administrator/search_filter']               = $administrator . 'search_filter';
+$route['administrator/delete_history_batch']        = $administrator . 'delete_history_batch';
+
+
+$route['administrator/req_order']                   = $administrator . 'req_order';
+$route['administrator/generate_no_ppbj']            = $administrator . 'generate_no_ppbj';
+$route['administrator/check_register_no']           = $administrator . 'check_register_no';
+$route['administrator/add_req_order']               = $administrator . 'add_req_order';
+$route['administrator/update_req_order/(:any)']     = $administrator . 'update_req_order/$1';
+$route['administrator/save_update_req_order']       = $administrator . 'save_update_req_order';
+$route['administrator/save_req_order']              = $administrator . 'save_req_order';
+$route['administrator/delete_req_order']            = $administrator . 'delete_req_order';
+$route['administrator/add_material_for_req_order']  = $administrator . 'add_material_for_req_order';
+$route['administrator/posttoprintreqorder']         = $administrator . 'post_to_print_req_order';
+$route['administrator/print_req_order/(:any)']      = $administrator . 'print_req_order/$1';
+$route['administrator/get_req_order_by_register_no'] = $administrator . 'get_req_order_by_register_no';
+$route['administrator/get_list_material_req_order_by_regist_no']    = $administrator . 'get_list_material_req_order_by_regist_no';
+
+$route['administrator/update_no_status']            = $administrator . 'update_no_status';
+$route['administrator/update_ppbj']                 = $administrator . 'update_ppbj';
+$route['administrator/update_sr']                   = $administrator . 'update_sr';
+$route['administrator/update_pr']                   = $administrator . 'update_pr';
+$route['administrator/update_po']                   = $administrator . 'update_po';
+$route['administrator/update_jugdment']             = $administrator . 'update_jugdment';
+
 
 $route['administrator/manage_user']                 = $administrator . 'manage_user';
 $route['administrator/check_username']              = $administrator . 'check_username';
@@ -150,7 +184,7 @@ $route['administrator/save_change_password']        = $administrator . 'save_cha
 
 
 //------------------------------------------------- ADMIN -------------------------------------------------\\
-$route['admin/dashboard']   = $admin . 'dashboard';
+$route['admin/dashboard']                   = $admin . 'dashboard';
 
 $route['admin/material_list']               = $admin . 'material_list';
 $route['admin/get_category']                = $admin . 'get_category';
@@ -164,6 +198,8 @@ $route['admin/upload_material']             = $admin . 'upload_excel_material';
 $route['admin/posttopdf']                   = $admin . 'post_to_pdf';
 $route['admin/print_label_pdf']             = $admin . 'print_label_pdf';
 $route['admin/material_list_pdf']           = $admin . 'material_list_pdf';
+$route['admin/delete_material_batch']       = $admin . 'delete_material_batch';
+$route['admin/get_material_by_code_material'] = $admin . 'get_material_by_code_material';
 
 $route['admin/category']                    = $admin . 'category';
 $route['admin/add_category']                = $admin . 'add_category';
@@ -174,6 +210,7 @@ $route['admin/delete_category']             = $admin . 'delete_category';
 $route['admin/upload_category']             = $admin . 'upload_category';
 
 $route['admin/area']                        = $admin . 'area';
+$route['admin/get_area']                    = $admin . 'get_area';
 $route['admin/add_area']                    = $admin . 'add_area';
 $route['admin/check_code_area']             = $admin . 'check_code_area';
 $route['admin/save_area']                   = $admin . 'save_area';
@@ -181,6 +218,7 @@ $route['admin/update_area']                 = $admin . 'update_area';
 $route['admin/delete_area']                 = $admin . 'delete_area';
 
 $route['admin/line']                        = $admin . 'line';
+$route['admin/get_line_by_area']            = $admin . 'get_line_by_area';
 $route['admin/add_line']                    = $admin . 'add_line';
 $route['admin/check_code_line']             = $admin . 'check_code_line';
 $route['admin/save_line']                   = $admin . 'save_line';
@@ -188,6 +226,7 @@ $route['admin/update_line']                 = $admin . 'update_line';
 $route['admin/delete_line']                 = $admin . 'delete_line';
 
 $route['admin/machine']                     = $admin . 'machine';
+$route['admin/get_machine_by_line']         = $admin . 'get_machine_by_line';
 $route['admin/add_machine']                 = $admin . 'add_machine';
 $route['admin/check_code_machine']          = $admin . 'check_code_machine';
 $route['admin/save_machine']                = $admin . 'save_machine';
@@ -225,6 +264,28 @@ $route['admin/save_good_issue']             = $admin . 'save_goods_issue';
 $route['admin/history_transaction']         = $admin . 'history_transaction';
 $route['admin/search_filter']               = $admin . 'search_filter';
 
+$route['admin/req_order']                   = $admin . 'req_order';
+$route['admin/generate_no_ppbj']            = $admin . 'generate_no_ppbj';
+$route['admin/check_register_no']           = $admin . 'check_register_no';
+$route['admin/add_req_order']               = $admin . 'add_req_order';
+$route['admin/update_req_order/(:any)']     = $admin . 'update_req_order/$1';
+$route['admin/save_update_req_order']       = $admin . 'save_update_req_order';
+$route['admin/save_req_order']              = $admin . 'save_req_order';
+$route['admin/delete_req_order']            = $admin . 'delete_req_order';
+$route['admin/print_req_order']             = $admin . 'print_Req_order';
+$route['admin/add_material_for_req_order']  = $admin . 'add_material_for_req_order';
+$route['admin/posttoprintreqorder']         = $admin . 'post_to_print_req_order';
+$route['admin/print_req_order/(:any)']      = $admin . 'print_req_order/$1';
+$route['admin/get_req_order_by_register_no'] = $admin . 'get_req_order_by_register_no';
+$route['admin/get_list_material_req_order_by_regist_no'] = $admin . 'get_list_material_req_order_by_regist_no';
+
+$route['admin/update_no_status']            = $admin . 'update_no_status';
+$route['admin/update_ppbj']                 = $admin . 'update_ppbj';
+$route['admin/update_sr']                   = $admin . 'update_sr';
+$route['admin/update_pr']                   = $admin . 'update_pr';
+$route['admin/update_po']                   = $admin . 'update_po';
+$route['admin/update_jugdment']             = $admin . 'update_jugdment';
+
 $route['admin/change_password']             = $admin . 'change_password';
 $route['admin/save_change_password']        = $admin . 'save_change_password';
 //------------------------------------------------- ADMIN -------------------------------------------------\\
@@ -245,6 +306,7 @@ $route['users/upload_material']             = $users . 'upload_excel_material';
 $route['users/posttopdf']                   = $users . 'post_to_pdf';
 $route['users/print_label_pdf']             = $users . 'print_label_pdf';
 $route['users/material_list_pdf']           = $users . 'material_list_pdf';
+$route['users/get_material_by_code_material'] = $users . 'get_material_by_code_material';
 
 $route['users/category']                    = $users . 'category';
 $route['users/add_category']                = $users . 'add_category';
@@ -253,6 +315,7 @@ $route['users/save_category']               = $users . 'save_category';
 $route['users/upload_category']             = $users . 'upload_category';
 
 $route['users/area']                        = $users . 'area';
+$route['users/get_area']                    = $users . 'get_area';
 $route['users/add_area']                    = $users . 'add_area';
 $route['users/check_code_area']             = $users . 'check_code_area';
 $route['users/save_area']                   = $users . 'save_area';
@@ -260,6 +323,7 @@ $route['users/update_area']                 = $users . 'update_area';
 $route['users/delete_area']                 = $users . 'delete_area';
 
 $route['users/line']                        = $users . 'line';
+$route['users/get_line_by_area']            = $users . 'get_line_by_area';
 $route['users/add_line']                    = $users . 'add_line';
 $route['users/check_code_line']             = $users . 'check_code_line';
 $route['users/save_line']                   = $users . 'save_line';
@@ -267,6 +331,7 @@ $route['users/update_line']                 = $users . 'update_line';
 $route['users/delete_line']                 = $users . 'delete_line';
 
 $route['users/machine']                     = $users . 'machine';
+$route['users/get_machine_by_line']         = $users . 'get_machine_by_line';
 $route['users/add_machine']                 = $users . 'add_machine';
 $route['users/check_code_machine']          = $users . 'check_code_machine';
 $route['users/save_machine']                = $users . 'save_machine';
@@ -303,6 +368,21 @@ $route['users/update_goods_issue']          = $users . 'update_goods_issue';
 $route['users/save_good_issue']             = $users . 'save_goods_issue';
 $route['users/history_transaction']         = $users . 'history_transaction';
 $route['users/search_filter']               = $users . 'search_filter';
+
+$route['users/req_order']                   = $users . 'req_order';
+$route['users/generate_no_ppbj']            = $users . 'generate_no_ppbj';
+$route['users/check_register_no']           = $users . 'check_register_no';
+$route['users/add_req_order']               = $users . 'add_req_order';
+$route['users/update_req_order/(:any)']     = $users . 'update_req_order/$1';
+$route['users/save_update_req_order']       = $users . 'save_update_req_order';
+$route['users/save_req_order']              = $users . 'save_req_order';
+$route['users/delete_req_order']            = $users . 'delete_req_order';
+$route['users/add_material_for_req_order']  = $users . 'add_material_for_req_order';
+$route['users/print_req_order/(:any)']      = $users . 'print_req_order/$1';
+$route['users/get_req_order_by_register_no'] = $users . 'get_req_order_by_register_no';
+
+
+
 
 $route['users/change_password']             = $users . 'change_password';
 $route['users/save_change_password']        = $users . 'save_change_password';

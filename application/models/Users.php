@@ -21,6 +21,7 @@ class Users extends CI_Model
         $this->load->model('Transaction');
         $this->load->model('Uom');
         $this->load->model('Users');
+        $this->load->model('Req_order');
     }
     public function count_users()
     {
@@ -103,7 +104,7 @@ class Users extends CI_Model
         $this->name     = htmlspecialchars($this->input->post('name'), TRUE);
         $this->username = htmlspecialchars($this->input->post('username'), TRUE);
         $this->id_role  = htmlspecialchars($this->input->post('id_role'), TRUE);
-        
+
         $data = [
             'name'          => $this->name,
             'username'      => $this->username,
@@ -351,6 +352,12 @@ class Users extends CI_Model
         return $this->Material->count_material_list();
     }
 
+    public function get_material_by_code_material()
+    {
+        $code_material = $this->input->post('code_material');
+        return $this->Material->get_material_by_code_material($code_material);
+    }
+
     public function get_all_material()
     {
         return $this->Material->get_all_material();
@@ -494,6 +501,149 @@ class Users extends CI_Model
     {
         return $this->Uom->delete_uom($id_uom);
     }
+
+    //------------------------------------- Request Order -------------------------------------\\
+
+    public function get_count_req_order()
+    {
+        return $this->Req_order->get_count_req_order();
+    }
+
+    public function get_count_status_ppbj_on_progress()
+    {
+        return $this->Req_order->get_count_status_ppbj_on_progress();
+    }
+
+    public function get_count_status_ppbj_delay()
+    {
+        return $this->Req_order->get_count_status_ppbj_delay();
+    }
+
+    public function get_count_status_ppbj_done()
+    {
+        return $this->Req_order->get_count_status_ppbj_done();
+    }
+
+    public function get_count_status_ppbj_cancel()
+    {
+        return $this->Req_order->get_count_status_ppbj_cancel();
+    }
+
+    public function get_count_status_sr_on_progress()
+    {
+        return $this->Req_order->get_count_status_sr_on_progress();
+    }
+
+    public function get_count_status_sr_delay()
+    {
+        return $this->Req_order->get_count_status_sr_delay();
+    }
+
+    public function get_count_status_sr_done()
+    {
+        return $this->Req_order->get_count_status_sr_done();
+    }
+
+    public function get_count_status_sr_cancel()
+    {
+        return $this->Req_order->get_count_status_sr_cancel();
+    }
+
+    public function get_count_status_pr_on_progress()
+    {
+        return $this->Req_order->get_count_status_pr_on_progress();
+    }
+
+    public function get_count_status_pr_delay()
+    {
+        return $this->Req_order->get_count_status_pr_delay();
+    }
+
+    public function get_count_status_pr_done()
+    {
+        return $this->Req_order->get_count_status_pr_done();
+    }
+
+    public function get_count_status_pr_cancel()
+    {
+        return $this->Req_order->get_count_status_pr_cancel();
+    }
+
+    public function get_count_status_po_on_progress()
+    {
+        return $this->Req_order->get_count_status_po_on_progress();
+    }
+
+    public function get_count_status_po_delay()
+    {
+        return $this->Req_order->get_count_status_po_delay();
+    }
+
+    public function get_count_status_po_done()
+    {
+        return $this->Req_order->get_count_status_po_done();
+    }
+
+    public function get_count_status_po_cancel()
+    {
+        return $this->Req_order->get_count_status_po_cancel();
+    }
+
+    public function get_count_jugdment_on_progress()
+    {
+        return $this->Req_order->get_count_jugdment_on_progress();
+    }
+
+    public function get_count_jugdment_delay()
+    {
+        return $this->Req_order->get_count_jugdment_delay();
+    }
+
+    public function get_count_jugdment_received()
+    {
+        return $this->Req_order->get_count_jugdment_received();
+    }
+
+    public function get_count_jugdment_cancel()
+    {
+        return $this->Req_order->get_count_jugdment_cancel();
+    }
+
+    public function get_count_jugdment_process_delivery_material()
+    {
+        return $this->Req_order->get_count_jugdment_process_delivery_material();
+    }
+
+    public function get_all_req_order()
+    {
+        return $this->Req_order->get_all_req_order();
+    }
+    
+    public function create_no_ppbj($department_code)
+    {
+        return $this->Req_order->create_no_ppbj($department_code);
+    }
+
+    public function check_register_no($register_no, $original_register_no, $regist_no)
+    {
+        return $this->Req_order->check_register_no($register_no, $original_register_no, $regist_no);
+    }
+
+    public function save_req_order()
+    {
+        return $this->Req_order->save_req_order();
+    }
+
+    public function print_req_order_by_regist_no($regist_no)
+    {
+        return $this->Req_order->get_print_req_order_by_regist_no($regist_no);
+    }
+
+    public function get_print_req_order_by_regist_no($regist_no)
+    {
+        return $this->Req_order->get_req_order_by_regist_no_print($regist_no);
+    }
+    
 
     //------------------------------------- Users -------------------------------------\\
     public function get_count_users()

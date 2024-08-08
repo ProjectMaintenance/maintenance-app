@@ -41,9 +41,9 @@ input[type="text"] {
                 <table id="tbl_line" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
+                            <th class="text-center">NO</th>
                             <th>NAME AREA</th>
-                            <th>CODE LINE</th>
+                            <th class="text-center">CODE LINE</th>
                             <th>NAME LINE</th>
                         </tr>
                     </thead>
@@ -52,9 +52,9 @@ input[type="text"] {
                         $no = 1;
                         foreach ($line as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
+                            <td class="text-center"><?= $no++ ?></td>
                             <td><?= $value->name_area; ?></td>
-                            <td><?= $value->code_line; ?></td>
+                            <td class="text-center"><?= $value->code_line; ?></td>
                             <td><?= $value->name_line; ?></td>
                         </tr>
                         <?php endforeach ?>
@@ -81,12 +81,20 @@ $(document).ready(function() {
             "responsive": false,
             "lengthChange": true,
             "autoWidth": false,
+            "bStateSave": true,
+            "scrollY": 400,
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            },
             // select: {
             //     selected: true,
             //     style: 'multi'
             // },
-           
-            
+
+
         }).buttons().container().appendTo('#tbl_line_wrapper .col-md-6:eq(0)');
     });
 });

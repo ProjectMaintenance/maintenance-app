@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-               
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -60,7 +60,7 @@
                                 <h3><?= $count_goods_receive; ?></h3>
 
                                 <b>
-                                    <p>Goods Receive</p>
+                                    <p>Goods Receive (Barang Masuk)</p>
                                 </b>
                             </div>
                             <div class="icon">
@@ -73,37 +73,335 @@
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
+                        <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3><?= $count_goods_issue; ?></h3>
 
                                 <b>
-                                    <p>Goods Isue</p>
+                                    <p>Goods Issue(Barang Keluar)</p>
                                 </b>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-arrow-graph-down-right"></i>
                             </div>
-                            <a href="<?= site_url('admin/goods_issue') ?>" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <a href="<?= site_url('admin/goods_issue') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-info">
+                        <div class="small-box" style="background-color: burlywood">
                             <div class="inner">
                                 <h3><?= $count_transaction; ?></h3>
 
                                 <b>
-                                    <p>Transaction</p>
+                                    <p>History Transaction</p>
                                 </b>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-clipboard"></i>
                             </div>
-                            <a href="<?= site_url('admin/history_transaction') ?>" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <a href="<?= site_url('admin/history_transaction') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-12 col-12">
+                        <hr>
+                        <!-- small box -->
+                        <div class="small-box" style="background-color: #ffeb84">
+                            <div class="inner">
+                                <h4>Request Order Status</h4>
+                                <hr>
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Status PPBJ</th>
+                                            <th>Status SR</th>
+                                            <th>Status PR</th>
+                                            <th>Status PO</th>
+                                            <th>Overall Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <!-- Status PPBJ -->
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            ON PROGRESS
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_ppbj_on_progress; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <!-- Status SR -->
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            ON PROGRESS
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_sr_on_progress; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <!-- Status PR -->
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            ON PROGRESS
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_pr_on_progress; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <!-- Status PO -->
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            ON PROGRESS
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_po_on_progress; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <!-- Jugdment Atau Overall Status -->
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            ON PROGRESS
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_jugdment_on_progress; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <!-- Status PPBJ -->
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DONE
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_ppbj_done; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DONE
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_sr_done; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DONE
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_pr_done; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DONE
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_po_done; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            PROCESS DELIVERY MATERIAL
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_jugdment_process_delivery_material; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <!-- Status PPBJ -->
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DELAY
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_ppbj_delay; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DELAY
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_sr_delay; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DELAY
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_pr_delay; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DELAY
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_po_delay; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            RECEIVED
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_jugdment_received; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <!-- Status PPBJ -->
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            CANCEL
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_ppbj_cancel; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td><button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            CANCEL
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_sr_cancel; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button></td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            CANCEL
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_pr_cancel; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            CANCEL
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_status_po_cancel; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            DELAY
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_jugdment_delay; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-block">
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            CANCEL
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-light"><?= $count_jugdment_cancel; ?></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-cube"></i>
+                            </div>
+                            <a href="<?= site_url('admin/req_order') ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->

@@ -163,8 +163,19 @@
                         </li>
                     </ul>
                 </li>
-                <?php $manage_user = (uri_string() == 'administrator/manage_user') ? 'active' : ''; ?>
+                <?php
+                $params = $this->uri->segment(3);
+                $req_order = (uri_string() == 'administrator/req_order' || uri_string() == 'administrator/add_req_order' || uri_string() == 'administrator/update_req_order/' . $params) ? 'active' : ''; ?>
                 <li class="nav-item">
+                    <a href="<?= site_url('administrator/req_order') ?>" class="nav-link <?= $req_order; ?>">
+                        <i class="nav-icon fas fa-box-open"></i>
+                        <p>
+                            Request Order
+                        </p>
+                    </a>
+                </li>
+                <?php $manage_user = (uri_string() == 'administrator/manage_user') ? 'active' : ''; ?>
+                <li class=" nav-item">
                     <a href="<?= site_url('administrator/manage_user') ?>" class="nav-link <?= $manage_user; ?>">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
@@ -181,14 +192,14 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="" class="nav-link">
                         <i class="nav-icon fas fa-file-pdf"></i>
                         <p>
                             Guide Book
                         </p>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="<?= site_url('auth/logout'); ?>" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>

@@ -13,7 +13,7 @@ input[type="text"] {
                 <div class="col-sm-6">
                     <h1><?= $title_page; ?></h1>
                 </div>
-               
+
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -42,8 +42,8 @@ input[type="text"] {
                 <table id="tbl_area" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>CODE AREA</th>
+                            <th class="text-center">NO</th>
+                            <th class="text-center">CODE AREA</th>
                             <th>NAME AREA</th>
                             <th class="text-center">ACTION</th>
                         </tr>
@@ -53,8 +53,8 @@ input[type="text"] {
                         $no = 1;
                         foreach ($area as $value) : ?>
                         <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $value->code_area; ?></td>
+                            <td class="text-center"><?= $no++ ?></td>
+                            <td class="text-center"><?= $value->code_area; ?></td>
                             <td><?= $value->name_area; ?></td>
                             <td class="text-center">
                                 <!-- Button trigger modal -->
@@ -129,11 +129,6 @@ $(function() {
         "responsive": true,
         "lengthChange": true,
         "autoWidth": false,
-        // select: {
-        //     selected: true,
-        //     style: 'multi'
-        // },
-        
     }).buttons().container().appendTo('#tbl_area_wrapper .col-md-6:eq(0)');
 });
 //-------------------------------------------------- Update --------------------------------------------------\\
