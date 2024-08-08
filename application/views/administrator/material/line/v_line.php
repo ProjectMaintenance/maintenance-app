@@ -141,7 +141,19 @@
             //     style: 'multi'
             // },
 
-        }).buttons().container().appendTo('#tbl_category_wrapper .col-md-6:eq(0)');
+            "buttons": [
+                {
+                    extend: "excel",
+                    text: '<i class="fas fa-file-excel mr-2"></i> EXCEL',
+                    className: 'btn-success',
+                    title: '',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3] // Kolom yang akan diekspor
+                    }
+                }
+            ]
+
+        }).buttons().container().appendTo('#tbl_line_wrapper .col-md-6:eq(0)');
 
 
         //-------------------------------------------------- Update --------------------------------------------------\\

@@ -59,21 +59,25 @@ input[type="text"] {
                                     </div>
                                     <div class="form-group">
                                         <label for="department">Department</label>
-                                        <!-- <input type="text" class="form-control" id="department" name="department"
-                                            value="MAINTENANCE"> -->
                                         <select class="form-control" name="department" id="department">
                                             <option value="">- Select Department -</option>
                                             <?php
                                             $departments = [
-                                                'MAINTENANCE'               => 'MAINTENANCE',
-                                                'PRODUCTION ASM'            => 'PRODUCTION-ASM',
-                                                'PRODUCTION MCH'            => 'PRODUCTION-MCH',
+                                                'MAINTENANCE' => 'MAINTENANCE',
+                                                'PRODUCTION ASM' => 'PRODUCTION-ASM',
+                                                'PRODUCTION MCH' => 'PRODUCTION-MCH',
                                                 'MANUFACTURING ENGINEERING' => 'MANUFACTURING ENGINEERING',
-                                                'QUALITY CONTROL'           => 'QUALITY CONTROL',
-                                                'PPC'                       => 'PPC',
-                                                'GA'                        => 'GA'
+                                                'QUALITY CONTROL' => 'QUALITY CONTROL',
+                                                'PPC' => 'PPC',
+                                                'GA' => 'GA'
                                             ];
+                                            $selected = '';
                                             foreach ($departments as $key => $value) {
+                                                if ($key == 'MAINTENANCE') {
+                                                    $selected = 'selected';
+                                                } else {
+                                                    $selected = '';
+                                                }
                                                 echo "<option value=\"$key\" $selected>$value</option>";
                                             }
                                             ?>
@@ -276,37 +280,45 @@ input[type="text"] {
 <script>
 $(document).ready(function() {
 
-    $('#department').change(function(e) {
-        e.preventDefault();
+    // Trigger the generate_no_ppbj function on page load
+    generateRegisterNo();
 
-        var department = $(this).val();
+$('#department').change(function(e) {
+    e.preventDefault();
 
-        if (department === "") {
-            $('#register_no').val('');
-            return;
-        }
+    var department = $(this).val();
 
-        $.ajax({
-            url: '<?= site_url('administrator/generate_no_ppbj'); ?>', // Replace with the URL to your PHP function
-            type: 'POST',
-            data: {
-                department: department
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    $('#register_no').val(response.no_ppbj);
-                } else {
-                    alert('Failed to generate register number');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-                alert('An error occurred while generating the register number');
+    generateRegisterNo();
+});
+
+function generateRegisterNo() {
+    var department = $('#department').val();
+
+    if (department === "") {
+        $('#register_no').val('');
+        return;
+    }
+
+    $.ajax({
+        url: '<?= site_url('administrator/generate_no_ppbj'); ?>',
+        type: 'POST',
+        data: {
+            department: department
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                $('#register_no').val(response.no_ppbj);
+            } else {
+                alert('Failed to generate register number');
             }
-        });
-
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+            alert('An error occurred while generating the register number');
+        }
     });
+}
 
     $('#attachment').select2({
         placeholder: 'Select Attachment',

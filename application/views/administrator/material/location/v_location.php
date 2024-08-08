@@ -205,6 +205,16 @@
                     //         }
                     //     },
 
+                {
+                    extend: "excel",
+                    text: '<i class="fas fa-file-excel mr-2"></i> EXCEL',
+                    className: 'btn-success',
+                    title: '',
+                    exportOptions: {
+                        columns: [0, 1,] // Kolom yang akan diekspor
+                    }
+                },
+
                     {
                         extend: 'selectAll',
                         text: '<i class="fas fa-tasks mr-2"></i> Select All',

@@ -2353,7 +2353,7 @@ class Administrator_Controller extends CI_Controller
         $department = $this->input->post('department');
 
         // Determine the appropriate department code
-        $department_code = '';
+        $department_code = 'MAINTENACE';
         if ($department == 'MAINTENANCE') {
             $department_code = 'MTN';
         } elseif ($department == 'PRODUCTION ASM') {
