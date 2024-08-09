@@ -76,15 +76,15 @@
                                     <table id="tbl-export-excel-req-order" class="table table-bordered table-striped nowrap">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">REGISTER NO</th>
+                                                <th>REGISTER NO</th>
                                                 <th class="text-center">MATERIAL CODE</th>
                                                 <th>DESCRIPTION</th>
                                                 <th class="text-center">QUANTITY ORDER</th>
                                                 <th class="text-center">UOM</th>
-                                                <th>DATE CREATED</th>
-                                                <th>DATE REQUIRED</th>
+                                                <th class="text-center">DATE CREATED</th>
+                                                <th class="text-center">DATE REQUIRED</th>
                                                 <th class="text-center">ORDER CLASSIFICATION</th>
-                                                <th>NAME OF REQUESTER</th>
+                                                <th class="text-center">NAME OF REQUESTER</th>
                                                 <th class="text-center">NO PPBJ</th>
                                                 <th class="text-center">STATUS PPBJ</th>
                                                 <th class="text-center">NO SR</th>
@@ -99,15 +99,15 @@
                                         <tbody>
                                             <?php foreach ($req_order as $value) : ?>
                                                 <tr>
-                                                    <td class="text-center"><?= $value->register_no; ?></td>
+                                                    <td><?= $value->register_no; ?></td>
                                                     <td class="text-center"><?= $value->code_material; ?></td>
                                                     <td><?= $value->item_description; ?></td>
                                                     <td class="text-center"><?= $value->quantity; ?></td>
                                                     <td class="text-center"><?= $value->uom; ?></td>
-                                                    <td><?= $value->date_created; ?></td>
-                                                    <td><?= $value->date_required; ?></td>
+                                                    <td class="text-center"><?= $value->date_created; ?></td>
+                                                    <td class="text-center"><?= $value->date_required; ?></td>
                                                     <td class="text-center"><?= $value->level_of_request; ?></td>
-                                                    <td><?= $value->requester_name; ?></td>
+                                                    <td class="text-center"><?= $value->requester_name; ?></td>
                                                     <td class="text-center"><?= $value->no_ppbj; ?></td>
                                                     <td class="text-center"><?= $value->status_ppbj; ?></td>
                                                     <td class="text-center"><?= $value->no_sr; ?></td>
@@ -143,24 +143,24 @@
                 <table id="tbl_req_order" class="table table-bordered table-striped nowrap">
                     <thead>
                         <tr>
-                            <th class="text-center">REGISTER NO</th>
+                            <th>REGISTER NO</th>
                             <th class="text-center">MATERIAL CODE</th>
                             <th>DESCRIPTION</th>
                             <th class="text-center">QUANTITY ORDER</th>
                             <th class="text-center">UOM</th>
-                            <th>DATE CREATED</th>
-                            <th>DATE REQUIRED</th>
+                            <th class="text-center">DATE CREATED</th>
+                            <th class="text-center">DATE REQUIRED</th>
                             <th class="text-center">ORDER CLASSIFICATION</th>
-                            <th>NAME OF REQUESTER</th>
+                            <th class="text-center">NAME OF REQUESTER</th>
                             <th class="text-center">NO PPBJ</th>
-                            <th>STATUS PPBJ</th>
-                            <th>NO SR</th>
-                            <th>STATUS SR</th>
-                            <th>NO PR</th>
-                            <th>STATUS PR</th>
-                            <th>NO PO</th>
-                            <th>STATUS PO</th>
-                            <th>OVERALL STATUS</th>
+                            <th class="text-center">STATUS PPBJ</th>
+                            <th class="text-center">NO SR</th>
+                            <th class="text-center">STATUS SR</th>
+                            <th class="text-center">NO PR</th>
+                            <th class="text-center">STATUS PR</th>
+                            <th class="text-center">NO PO</th>
+                            <th class="text-center">STATUS PO</th>
+                            <th class="text-center">OVERALL STATUS</th>
                             <th class="text-center">ACTION</th>
                         </tr>
                     </thead>
@@ -180,19 +180,19 @@
                         ?>
                             <tr>
                                 <form action="<?= site_url('admin/update_no_status'); ?>" id="form-update_no_status<?= $value->id_req_order ?>" method="POST">
-                                    <td class="text-center"><?= $value->register_no; ?></td>
+                                    <td><?= $value->register_no; ?></td>
                                     <td class="text-center"><?= $value->code_material ?></td>
                                     <td><?= $value->item_description ?></td>
                                     <td class="text-center"><?= $value->quantity ?></td>
                                     <td class="text-center"><?= $value->uom ?></td>
-                                    <td><?= $value->date_created ?></td>
-                                    <td><?= $value->date_required ?></td>
+                                    <td class="text-center"><?= $value->date_created ?></td>
+                                    <td class="text-center"><?= $value->date_required ?></td>
                                     <td class="text-center"><?= $value->level_of_request ?></td>
-                                    <td><?= $value->requester_name ?></td>
-                                    <td>
+                                    <td class="text-center"><?= $value->requester_name ?></td>
+                                    <td class="text-center">
                                         <input style="width: 180px;" type="text" class="form-control" name="no_ppbj" id="no_ppbj<?= $value->id_req_order; ?>" data-no-regist="<?= $value->regist_no; ?>" value="<?= $value->no_ppbj; ?>">
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <select style="width: 180px;" class="form-control <?= $status_ppbj_class ?>" name="status_ppbj" id="status_ppbj<?= $value->id_req_order; ?>">
                                             <option value="" <?php echo ($value->status_ppbj == '') ? 'selected' : ''; ?>>-
                                                 Pilih Status PPBJ -</option>
@@ -206,10 +206,10 @@
                                             </option>
                                         </select>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <input style="width: 180px;" type="text" class="form-control" name="no_sr" id="no_sr<?= $value->id_req_order; ?>" value="<?= $value->no_sr; ?>" data-id-req-order="<?= $value->id_req_order; ?>">
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <select style="width: 180px;" class="form-control <?= $status_sr_class ?>" name="status_sr" id="status_sr<?= $value->id_req_order; ?>">
                                             <option value="" <?php echo ($value->status_sr == '') ? 'selected' : ''; ?>>-
                                                 Pilih Status SR -</option>
@@ -224,10 +224,10 @@
                                             </option>
                                         </select>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <input style="width: 180px;" class="form-control" type="text" name="no_pr" id="no_pr<?= $value->id_req_order; ?>" value="<?= $value->no_pr; ?>">
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <select style="width: 180px;" class="form-control <?= $status_pr_class ?>" name="status_pr" id="status_pr<?= $value->id_req_order; ?>">
                                             <option value="" <?php echo ($value->status_pr == '') ? 'selected' : ''; ?>>
                                                 - Pilih Status PR -</option>
@@ -240,10 +240,10 @@
                                             </option>
                                         </select>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <input style="width: 180px;" class="form-control" type="text" name="no_po" id="no_po<?= $value->id_req_order; ?>" value="<?= $value->no_po; ?>">
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <select style="width: 180px;" class="form-control <?= $status_po_class ?>" name="status_po" id="status_po<?= $value->id_req_order; ?>">
                                             <option value="" <?php echo ($value->status_po == '') ? 'selected' : ''; ?>>-
                                                 Pilih Status PO -</option>
@@ -256,7 +256,7 @@
                                             </option>
                                         </select>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <select style="width: 250px;" class="form-control <?= $status_jugdment_class ?>" name="jugdment" id="jugdment<?= $value->id_req_order; ?>">
                                             <option value="" <?php echo ($value->jugdment == '') ? 'selected' : ''; ?>>-
                                                 Pilih
@@ -310,7 +310,6 @@
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
-
                 </table>
             </div>
             <!-- /.card-body -->
@@ -365,7 +364,7 @@
                                 <tr>
                                     <td>Department</td>
                                     <td>:</td>
-                                    <td>MAINTENANCE</td>
+                                    <td><?= $value->department; ?></td>
                                 </tr>
                                 <tr>
                                     <td>Category Item/Service</td>
@@ -840,19 +839,14 @@
 
                 var form = $(this);
 
-                var id_req_order = <?= $value->id_req_order; ?>
-
+                var id_req_order = <?= $value->id_req_order; ?>;
                 var no_ppbj = $('#no_ppbj<?= $value->id_req_order; ?>').val();
-                var regist_no = $('#no_ppbj<?= $value->id_req_order; ?>').data(
-                    'no-regist');
+                var regist_no = $('#no_ppbj<?= $value->id_req_order; ?>').data('no-regist');
                 var status_ppbj = $('#status_ppbj<?= $value->id_req_order; ?>').val();
-
                 var no_sr = $('#no_sr<?= $value->id_req_order; ?>').val();
                 var status_sr = $('#status_sr<?= $value->id_req_order; ?>').val();
-
                 var no_pr = $('#no_pr<?= $value->id_req_order; ?>').val();
                 var status_pr = $('#status_pr<?= $value->id_req_order; ?>').val();
-
                 var no_po = $('#no_po<?= $value->id_req_order; ?>').val();
                 var status_po = $('#status_po<?= $value->id_req_order; ?>').val();
                 var jugdment = $('#jugdment<?= $value->id_req_order; ?>').val();
@@ -878,16 +872,13 @@
                         if (response.success == true) {
                             toastr.success(response.message);
                             setTimeout(function() {
-                                    window.location.reload();
-                                },
-                                1500
-                            ); // Penundaan selama 2000 milidetik (2 detik)
+                                window.location.reload();
+                            }, 1500);
                         } else {
                             toastr.error(response.message);
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        // Tanggapan dari server jika terjadi kesalahan
                         console.log('AJAX Error:', textStatus);
                     },
                 });

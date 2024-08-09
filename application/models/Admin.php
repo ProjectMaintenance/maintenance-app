@@ -509,6 +509,11 @@ class Admin extends CI_Model
         return $this->Req_order->get_req_order_by_regist_no_print($regist_no);
     }
 
+    public function get_req_order_by_regist_no($regist_no)
+    {
+        return $this->Req_order->get_req_order_by_regist_no($regist_no);
+    }
+    
     public function print_req_order_by_regist_no($regist_no)
     {
         return $this->Req_order->get_print_req_order_by_regist_no($regist_no);

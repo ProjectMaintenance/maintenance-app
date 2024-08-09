@@ -1988,10 +1988,10 @@ class Admin_Controller extends CI_Controller
 
     public function get_req_order_by_register_no()
     {
-        $register_no    = $this->input->post('register_no');
+       
         $regist_no      = $this->input->post('regist_no');
 
-        $data = $this->Req_order->get_req_order_by_regist_no($register_no, $regist_no);
+        $data = $this->Admin->get_req_order_by_regist_no( $regist_no);
 
         if ($data) {
             echo json_encode($data);
