@@ -283,42 +283,42 @@ $(document).ready(function() {
     // Trigger the generate_no_ppbj function on page load
     generateRegisterNo();
 
-$('#department').change(function(e) {
-    e.preventDefault();
+    $('#department').change(function(e) {
+        e.preventDefault();
 
-    var department = $(this).val();
+        var department = $(this).val();
 
-    generateRegisterNo();
-});
-
-function generateRegisterNo() {
-    var department = $('#department').val();
-
-    if (department === "") {
-        $('#register_no').val('');
-        return;
-    }
-
-    $.ajax({
-        url: '<?= site_url('administrator/generate_no_ppbj'); ?>',
-        type: 'POST',
-        data: {
-            department: department
-        },
-        dataType: 'json',
-        success: function(response) {
-            if (response.success) {
-                $('#register_no').val(response.no_ppbj);
-            } else {
-                alert('Failed to generate register number');
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error:', error);
-            alert('An error occurred while generating the register number');
-        }
+        generateRegisterNo();
     });
-}
+
+    function generateRegisterNo() {
+        var department = $('#department').val();
+
+        if (department === "") {
+            $('#register_no').val('');
+            return;
+        }
+
+        $.ajax({
+            url: '<?= site_url('administrator/generate_no_ppbj'); ?>',
+            type: 'POST',
+            data: {
+                department: department
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    $('#register_no').val(response.no_ppbj);
+                } else {
+                    alert('Failed to generate register number');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+                alert('An error occurred while generating the register number');
+            }
+        });
+    }
 
     $('#attachment').select2({
         placeholder: 'Select Attachment',

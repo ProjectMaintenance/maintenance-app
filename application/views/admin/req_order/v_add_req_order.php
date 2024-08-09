@@ -55,21 +55,25 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="department">Department</label>
-                                        <!-- <input type="text" class="form-control" id="department" name="department"
-                                            value="MAINTENANCE"> -->
                                         <select class="form-control" name="department" id="department">
                                             <option value="">- Select Department -</option>
                                             <?php
                                             $departments = [
-                                                'MAINTENANCE'               => 'MAINTENANCE',
-                                                'PRODUCTION ASM'            => 'PRODUCTION-ASM',
-                                                'PRODUCTION MCH'            => 'PRODUCTION-MCH',
+                                                'MAINTENANCE' => 'MAINTENANCE',
+                                                'PRODUCTION ASM' => 'PRODUCTION-ASM',
+                                                'PRODUCTION MCH' => 'PRODUCTION-MCH',
                                                 'MANUFACTURING ENGINEERING' => 'MANUFACTURING ENGINEERING',
-                                                'QUALITY CONTROL'           => 'QUALITY CONTROL',
-                                                'PPC'                       => 'PPC',
-                                                'GA'                        => 'GA'
+                                                'QUALITY CONTROL' => 'QUALITY CONTROL',
+                                                'PPC' => 'PPC',
+                                                'GA' => 'GA'
                                             ];
+                                            $selected = '';
                                             foreach ($departments as $key => $value) {
+                                                if ($key == 'MAINTENANCE') {
+                                                    $selected = 'selected';
+                                                } else {
+                                                    $selected = '';
+                                                }
                                                 echo "<option value=\"$key\" $selected>$value</option>";
                                             }
                                             ?>
@@ -256,10 +260,19 @@
 <script>
     $(document).ready(function() {
 
+                // Trigger the generate_no_ppbj function on page load
+            generateRegisterNo();
+
         $('#department').change(function(e) {
             e.preventDefault();
 
             var department = $(this).val();
+
+            generateRegisterNo();
+        });
+
+        function generateRegisterNo() {
+            var department = $('#department').val();
 
             if (department === "") {
                 $('#register_no').val('');
@@ -267,7 +280,7 @@
             }
 
             $.ajax({
-                url: '<?= site_url('admin/generate_no_ppbj'); ?>', // Replace with the URL to your PHP function
+                url: '<?= site_url('admin/generate_no_ppbj'); ?>',
                 type: 'POST',
                 data: {
                     department: department
@@ -285,8 +298,7 @@
                     alert('An error occurred while generating the register number');
                 }
             });
-
-        });
+        }
 
         $('#attachment').select2({
             placeholder: 'Select Attachment',
@@ -385,7 +397,7 @@
                 '<input type="text" class="form-control item_description" name="item_description[]" style="200px;" placeholder="Enter Description"">', // Specification (empty for new row)
                 '<input type="number" class="form-control quantity" name="quantity[]" value="1" min="1" style="width: 75px;">',
                 '<input type="text" class="form-control uom" name="uom[]" style="300px;" placeholder="Uom"">', // UOM (empty for new row)
-                '<input type="date" class="form-control eta" name="eta[]" style="width: 150px;" value="' +
+                '<input type="date" class="form-control eta" name="eta[]" style="width:150px;" value="' +
                 date_required + '" placeholder="Enter ETA">',
                 '<input type="text" class="form-control category_req" name="category_req[]" style="200px;" placeholder="Input RO"">',
                 '<input type="text" class="form-control user" name="user[]" style="width: 200px;" placeholder="USER"><input type="text" class="form-control for" name="for[]" style="width: 200px;" placeholder="FOR">',
